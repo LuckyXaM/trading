@@ -16,6 +16,7 @@ namespace TrTransactions.Data.Models
         /// <summary>
         /// Валюта
         /// </summary>
+        [Required]
         public string Title { get; set; }
     }
 }

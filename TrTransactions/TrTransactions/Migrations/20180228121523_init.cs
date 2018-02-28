@@ -13,7 +13,7 @@ namespace TrTransactions.Migrations
                 columns: table => new
                 {
                     TransactionTypeId = table.Column<string>(nullable: false),
-                    Title = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -25,9 +25,9 @@ namespace TrTransactions.Migrations
                 columns: table => new
                 {
                     TransactionId = table.Column<Guid>(nullable: false),
-                    Ammount = table.Column<double>(nullable: false),
+                    Ammount = table.Column<decimal>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    CurrencyTypeId = table.Column<string>(nullable: true),
+                    CurrencyTypeId = table.Column<string>(nullable: false),
                     TransactionType = table.Column<int>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false)
                 },
@@ -39,7 +39,7 @@ namespace TrTransactions.Migrations
                         column: x => x.CurrencyTypeId,
                         principalTable: "CurrencyTypes",
                         principalColumn: "TransactionTypeId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

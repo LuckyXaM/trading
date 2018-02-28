@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace TrTransactions.Data.Models
 {
@@ -10,11 +11,13 @@ namespace TrTransactions.Data.Models
         /// <summary>
         /// Ид транзакции
         /// </summary>
+        [Key]
         public Guid TransactionId { get; set; }
 
         /// <summary>
         /// Дата транзакции
         /// </summary>
+        [Required]
         public DateTime CreatedAt { get; set; }
 
         /// <summary>
@@ -25,21 +28,25 @@ namespace TrTransactions.Data.Models
         /// <summary>
         /// Ид валюты
         /// </summary>
+        [Required]
         public string CurrencyTypeId { get; set; }
 
         /// <summary>
         /// Ид пользователя
         /// </summary>
+        [Required]
         public Guid UserId { get; set; }
 
         /// <summary>
         /// Сумма
         /// </summary>
-        public double Ammount { get; set; }
+        [Required]
+        public decimal Ammount { get; set; }
 
         /// <summary>
         /// Тип транзакции
         /// </summary>
+        [Required]
         public TransactionType TransactionType { get; set; }
     }
 }

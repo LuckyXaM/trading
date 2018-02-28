@@ -26,7 +26,8 @@ namespace TrTransactions.Migrations
                     b.Property<string>("TransactionTypeId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired();
 
                     b.HasKey("TransactionTypeId");
 
@@ -38,11 +39,12 @@ namespace TrTransactions.Migrations
                     b.Property<Guid>("TransactionId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<double>("Ammount");
+                    b.Property<decimal>("Ammount");
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("CurrencyTypeId");
+                    b.Property<string>("CurrencyTypeId")
+                        .IsRequired();
 
                     b.Property<int>("TransactionType");
 
@@ -59,7 +61,8 @@ namespace TrTransactions.Migrations
                 {
                     b.HasOne("TrTransactions.Data.Models.CurrencyType", "CurrencyType")
                         .WithMany()
-                        .HasForeignKey("CurrencyTypeId");
+                        .HasForeignKey("CurrencyTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
