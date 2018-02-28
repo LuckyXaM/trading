@@ -41,8 +41,6 @@ namespace TrTransactions.Migrations
 
                     b.Property<decimal>("Ammount");
 
-                    b.Property<Guid?>("AskId");
-
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("CurrencyTypeId")

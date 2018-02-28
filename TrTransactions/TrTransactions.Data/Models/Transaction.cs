@@ -48,10 +48,5 @@ namespace TrTransactions.Data.Models
         /// </summary>
         [Required]
         public TransactionType TransactionType { get; set; }
-
-        /// <summary>
-        /// Ид аска для брони
-        /// </summary>
-        public Guid? AskId { get; set; }
     }
 }

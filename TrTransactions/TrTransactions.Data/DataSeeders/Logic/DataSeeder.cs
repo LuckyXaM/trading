@@ -51,9 +51,9 @@ namespace TrTransactions.Data.DataSeeders.Logic
         {
             var actualCurrencies = CurrencyType();
 
-            var currencies = _transactionRepository.GetCurrencyTypes(actualCurrencies.Select(c => c.Title));
+            var currencies = _transactionRepository.GetCurrencyTypes(actualCurrencies.Select(c => c.TransactionTypeId));
 
-             _transactionRepository.AddCurrencyTypes(actualCurrencies.Where(u => !currencies.ToList().Select(c => c.Title).Contains(u.Title)));
+             _transactionRepository.AddCurrencyTypes(actualCurrencies.Where(u => !currencies.ToList().Select(c => c.TransactionTypeId).Contains(u.TransactionTypeId)));
 
             await _unitOfWork.SaveChangesAsync();
         }
@@ -72,6 +72,10 @@ namespace TrTransactions.Data.DataSeeders.Logic
                 new CurrencyType{
                     TransactionTypeId = "BTC",
                     Title = "Биткоин"
+                },
+                new CurrencyType{
+                    TransactionTypeId = "BCH",
+                    Title = "Биткоин кэш"
                 }
             };
         }

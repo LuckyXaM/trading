@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using TrTransactions.Data.Models;
 
 namespace TrTransactions.Data.Repositories.Interfaces
@@ -12,6 +14,28 @@ namespace TrTransactions.Data.Repositories.Interfaces
         /// Добавляет транзакцию
         /// </summary>
         void Add(Transaction transaction);
+
+        /// <summary>
+        /// Добавляет транзакции
+        /// </summary>
+        void AddRange(List<Transaction> transactions);
+
+        /// <summary>
+        /// Получает транзакции пользователя по статусу
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<Transaction> GetList(Guid userId, string currencyTypeId, TransactionType transactionType);
+
+        /// <summary>
+        /// Получает все транзакции пользователя
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<Transaction> GetList(Guid abonentId, string currencyTypeId);
+
+        /// <summary>
+        /// Удаляет транзакции
+        /// </summary>
+        void RemoveRange(List<Transaction> transactions);
 
         /// <summary>
         /// Получает типы валют
