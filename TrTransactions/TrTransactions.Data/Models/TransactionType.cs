@@ -28,7 +28,12 @@
         /// <summary>
         /// Покупка
         /// </summary>
-        Ask = 5
+        Ask = 5,
+
+        /// <summary>
+        /// Бронь
+        /// </summary>
+        Reserve = 6
     }
 }
 

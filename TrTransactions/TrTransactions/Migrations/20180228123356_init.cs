@@ -26,6 +26,7 @@ namespace TrTransactions.Migrations
                 {
                     TransactionId = table.Column<Guid>(nullable: false),
                     Ammount = table.Column<decimal>(nullable: false),
+                    AskId = table.Column<Guid>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     CurrencyTypeId = table.Column<string>(nullable: false),
                     TransactionType = table.Column<int>(nullable: false),
