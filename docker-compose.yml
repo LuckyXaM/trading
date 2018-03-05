@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  trading:
+    image: tr-transactions
+    build:
+      context: .
+      dockerfile: TrTransactions/TrTransactions/Dockerfile
+    depends_on:
+      - postgresql.data
+
+  postgresql.data:
+    image: postgres
