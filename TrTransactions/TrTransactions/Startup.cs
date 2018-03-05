@@ -35,7 +35,6 @@ namespace TrTransactions
         {
             // Подключение БД
             var dbConnectionString = _configuration["DbConnectionString"] ?? _configuration.GetConnectionString("DefaultConnection");
-
             services.AddEntityFrameworkNpgsql()
                 .AddDbContext<TrTransactionsContext>(options =>
                 {
