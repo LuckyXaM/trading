@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TrModels;
 using TrTransactions.Data.DataSeeders.Interfaces;
 using TrTransactions.Data.Infrastructure.Interfaces;
 using TrTransactions.Data.Models;

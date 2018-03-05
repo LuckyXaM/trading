@@ -1,34 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TrDeals.Data;
 
 namespace TrDeals
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        private IConfiguration _configuration { get; }
+
+        private IHostingEnvironment _env;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
+            _configuration = configuration;
+            _env = env;
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public IServiceProvider ConfigureServices(IServiceCollection services)
+        {
+            var dbConnectionString = _configuration["DbConnectionString"] ?? _configuration.GetConnectionString("DefaultConnection");
+
+            services.AddEntityFrameworkNpgsql()
+                .AddDbContext<TrDealsContext>(options =>
+                {
+                    options.UseNpgsql(dbConnectionString,
+                        sqlOptions =>
+                        {
+                            sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                            sqlOptions.EnableRetryOnFailure(
+                                maxRetryCount: 5,
+                                maxRetryDelay: TimeSpan.FromSeconds(30),
+                                errorCodesToAdd: null);
+                        });
+                }, ServiceLifetime.Scoped);
+
+            return services.BuildServiceProvider();
+        }
+        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
+            var dbContext = app.ApplicationServices.GetService<TrDealsContext>();
+            dbContext.Database.Migrate();
         }
     }
 }

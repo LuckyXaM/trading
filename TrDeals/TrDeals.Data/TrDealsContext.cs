@@ -1,20 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TrDeals.Data.Models;
 using TrModels;
-using TrTransactions.Data.Models;
 
-namespace TrTransactions.Data
+namespace TrDeals.Data
 {
     /// <summary>
     /// Контекст для работы с БД
     /// </summary>
-    public class TrTransactionsContext : DbContext
+    public class TrDealsContext : DbContext
     {
         #region Свойства (Таблицы)
 
         /// <summary>
-        /// Транзакция
+        /// Аски
         /// </summary>
-        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Ask> Asks { get; set; }
+
+        /// <summary>
+        /// Биды
+        /// </summary>
+        public DbSet<Bid> Bids { get; set; }
 
         /// <summary>
         /// Тип валюты
@@ -28,7 +33,7 @@ namespace TrTransactions.Data
         /// <summary>
         /// Контекст для работы с БД
         /// </summary>
-        public TrTransactionsContext(DbContextOptions<TrTransactionsContext> options) : base(options)
+        public TrDealsContext(DbContextOptions<TrDealsContext> options) : base(options)
         {
         }
 

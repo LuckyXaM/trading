@@ -2,21 +2,21 @@
 using System.ComponentModel.DataAnnotations;
 using TrModels;
 
-namespace TrTransactions.Data.Models
+namespace TrDeals.Data.Models
 {
     /// <summary>
-    /// Транзакция
+    /// Бид
     /// </summary>
-    public class Transaction
+    public class Bid
     {
         /// <summary>
-        /// Ид транзакции
+        /// Ид бида
         /// </summary>
         [Key]
-        public Guid TransactionId { get; set; }
+        public Guid AskId { get; set; }
 
         /// <summary>
-        /// Дата транзакции
+        /// Дата создания
         /// </summary>
         [Required]
         public DateTime CreatedAt { get; set; }
@@ -24,6 +24,7 @@ namespace TrTransactions.Data.Models
         /// <summary>
         /// Валюта
         /// </summary>
+        [Required]
         public virtual CurrencyType CurrencyType { get; set; }
 
         /// <summary>
@@ -43,11 +44,5 @@ namespace TrTransactions.Data.Models
         /// </summary>
         [Required]
         public decimal Ammount { get; set; }
-
-        /// <summary>
-        /// Тип транзакции
-        /// </summary>
-        [Required]
-        public TransactionType TransactionType { get; set; }
     }
 }

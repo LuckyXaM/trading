@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TrModels;
 using TrTransactions.Data.Models;
 
 namespace TrTransactions.Data.Repositories.Interfaces
