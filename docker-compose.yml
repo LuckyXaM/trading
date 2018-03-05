@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  trading:
+  tr-transactions:
     image: tr-transactions
     build:
       context: .
@@ -9,5 +9,12 @@ services:
     depends_on:
       - postgresql.data
 
+  tr-deals:
+    image: tr-deals
+    build:
+      context: .
+      dockerfile: TrDeals/TrDeals/Dockerfile
+
   postgresql.data:
     image: postgres
+

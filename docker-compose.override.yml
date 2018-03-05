@@ -1,12 +1,17 @@
 version: '3'
 
 services:
-  trading:
+  tr-transactions:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DbConnectionString=${TR_DB:-Host=postgresql.data;Port=5432;Database=tr-transactions;Username=tr-user;Password=postgres1}
     ports:
       - "8005:80"
+  tr-deals:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8004:80"
 
   postgresql.data:
     environment:
@@ -14,3 +19,4 @@ services:
       - POSTGRES_USER=tr-user
     ports:
       - "5433:5432"
+
