@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TrModels;
 using TrTransactions.Data.Models;
 using TrTransactions.Data.Repositories.Interfaces;
 
@@ -56,18 +55,18 @@ namespace TrTransactions.Data.Repositories.Logic
         /// Получает транзакции пользователя по статусу
         /// </summary>
         /// <returns></returns>
-        public IQueryable<Transaction> GetList(Guid userId, string currencyTypeId, TransactionType transactionType)
+        public IQueryable<Transaction> GetList(Guid userId, string currencyId, TransactionType transactionType)
         {
-            return _context.Transactions.Where(t => t.UserId == userId && t.CurrencyTypeId == currencyTypeId.ToUpper() && t.TransactionType == transactionType);
+            return _context.Transactions.Where(t => t.UserId == userId && t.CurrencyId == currencyId.ToUpper() && t.TransactionType == transactionType);
         }
 
         /// <summary>
         /// Получает все транзакции пользователя
         /// </summary>
-        public IQueryable<Transaction> GetList(Guid abonentId, string currencyTypeId)
+        public IQueryable<Transaction> GetList(Guid abonentId, string currencyId)
         {
             return _context.Transactions.AsNoTracking()
-                .Where(t => t.UserId == abonentId && t.CurrencyTypeId == currencyTypeId.ToUpper());
+                .Where(t => t.UserId == abonentId && t.CurrencyId == currencyId.ToUpper());
         }
 
         /// <summary>
@@ -76,24 +75,6 @@ namespace TrTransactions.Data.Repositories.Logic
         public void RemoveRange(List<Transaction> transactions)
         {
             _context.Transactions.RemoveRange(transactions);
-        }
-
-        /// <summary>
-        /// Получает типы валют
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<CurrencyType> GetCurrencyTypes(IEnumerable<string> currencyTypes)
-        {
-            return _context.CurrencyTypes.AsNoTracking()
-                .Where(c => currencyTypes.Contains(c.TransactionTypeId.ToUpper()));
-        }
-
-        /// <summary>
-        /// Добавляет типы валют
-        /// </summary>
-        public void AddCurrencyTypes(IEnumerable<CurrencyType> currencyTypes)
-        {
-            _context.CurrencyTypes.AddRange(currencyTypes);
         }
 
         #endregion

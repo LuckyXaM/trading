@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace TrDeals.Data.DataSeeders.Interfaces
+namespace TrCurrencies.Data.DataSeeders.Interfaces
 {
     /// <summary>
     /// Заполнение данными
@@ -8,8 +8,8 @@ namespace TrDeals.Data.DataSeeders.Interfaces
     public interface IDataSeeder
     {
         /// <summary>
-        /// Добавление валют
+        /// Заполняет данными
         /// </summary>
-        Task SeedCurrencies();
+        Task SeedDataAsync();
     }
 }

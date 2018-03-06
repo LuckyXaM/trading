@@ -38,15 +38,5 @@ namespace TrDeals.Data.Repositories.Interfaces
         /// Получает биды
         /// </summary>
         void GetBids(decimal ammount);
-
-        /// <summary>
-        /// Получает типы валют
-        /// </summary>
-        IEnumerable<CurrencyType> GetCurrencyTypes(IEnumerable<string> currencyTypes);
-
-        /// <summary>
-        /// Добавляет типы валют
-        /// </summary>
-        void AddCurrencyTypes(IEnumerable<CurrencyType> currencyTypes);
     }
 }

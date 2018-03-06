@@ -1,6 +1,9 @@
 version: '3'
 
 services:
+  postgresql.data:
+    image: postgres
+
   tr-transactions:
     image: tr-transactions
     build:
@@ -14,7 +17,13 @@ services:
     build:
       context: .
       dockerfile: TrDeals/TrDeals/Dockerfile
+    depends_on:
+      - postgresql.data
 
-  postgresql.data:
-    image: postgres
-
+  tr-currencies:
+    image: tr-currencies
+    build:
+      context: .
+      dockerfile: TrCurrencies/TrCurrencies/Dockerfile
+    depends_on:
+      - postgresql.data

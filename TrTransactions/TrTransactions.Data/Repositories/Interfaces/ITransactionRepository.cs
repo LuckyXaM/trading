@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TrModels;
 using TrTransactions.Data.Models;
 
 namespace TrTransactions.Data.Repositories.Interfaces
@@ -37,15 +36,5 @@ namespace TrTransactions.Data.Repositories.Interfaces
         /// Удаляет транзакции
         /// </summary>
         void RemoveRange(List<Transaction> transactions);
-
-        /// <summary>
-        /// Получает типы валют
-        /// </summary>
-        IEnumerable<CurrencyType> GetCurrencyTypes(IEnumerable<string> currencyTypes);
-
-        /// <summary>
-        /// Добавляет типы валют
-        /// </summary>
-        void AddCurrencyTypes(IEnumerable<CurrencyType> currencyTypes);
     }
 }

@@ -21,11 +21,6 @@ namespace TrDeals.Data
         /// </summary>
         public DbSet<Bid> Bids { get; set; }
 
-        /// <summary>
-        /// Тип валюты
-        /// </summary>
-        public DbSet<CurrencyType> CurrencyTypes { get; set; }
-
         #endregion
 
         #region Конструктор

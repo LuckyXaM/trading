@@ -29,14 +29,15 @@ namespace TrDeals.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("CurrencyTypeId")
+                    b.Property<string>("CurrencyFromId")
+                        .IsRequired();
+
+                    b.Property<string>("CurrencyToId")
                         .IsRequired();
 
                     b.Property<Guid>("UserId");
 
                     b.HasKey("AskId");
-
-                    b.HasIndex("CurrencyTypeId");
 
                     b.ToTable("Asks");
                 });
@@ -50,45 +51,17 @@ namespace TrDeals.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("CurrencyTypeId")
+                    b.Property<string>("CurrencyFromId")
+                        .IsRequired();
+
+                    b.Property<string>("CurrencyToId")
                         .IsRequired();
 
                     b.Property<Guid>("UserId");
 
                     b.HasKey("AskId");
 
-                    b.HasIndex("CurrencyTypeId");
-
                     b.ToTable("Bids");
-                });
-
-            modelBuilder.Entity("TrModels.CurrencyType", b =>
-                {
-                    b.Property<string>("TransactionTypeId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Title")
-                        .IsRequired();
-
-                    b.HasKey("TransactionTypeId");
-
-                    b.ToTable("CurrencyTypes");
-                });
-
-            modelBuilder.Entity("TrDeals.Data.Models.Ask", b =>
-                {
-                    b.HasOne("TrModels.CurrencyType", "CurrencyType")
-                        .WithMany()
-                        .HasForeignKey("CurrencyTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("TrDeals.Data.Models.Bid", b =>
-                {
-                    b.HasOne("TrModels.CurrencyType", "CurrencyType")
-                        .WithMany()
-                        .HasForeignKey("CurrencyTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

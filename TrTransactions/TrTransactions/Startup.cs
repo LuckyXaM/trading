@@ -8,8 +8,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using TrTransactions.Data;
-using TrTransactions.Data.DataSeeders.Interfaces;
-using TrTransactions.Data.DataSeeders.Logic;
 using TrTransactions.Data.Infrastructure.Interfaces;
 using TrTransactions.Data.Infrastructure.Logic;
 using TrTransactions.Data.Repositories.Interfaces;
@@ -51,7 +49,6 @@ namespace TrTransactions
 
             services.AddScoped<ITransactionRepository, TransactionRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddSingleton<IDataSeeder, DataSeeder>();
 
             services.AddScoped<ITransactionService, TransactionService>();
 
@@ -76,13 +73,9 @@ namespace TrTransactions
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            // Применение миграций
+            //Применение миграций
             var dbContext = app.ApplicationServices.GetService<TrTransactionsContext>();
             dbContext.Database.Migrate();
-
-            // Заполнение справочников
-            var dataSeeder = app.ApplicationServices.GetRequiredService<IDataSeeder>();
-            dataSeeder.SeedCurrencies().GetAwaiter().GetResult();
 
             // Подключение документации
             app.UseSwagger();

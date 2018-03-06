@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TrModels;
 
 namespace TrTransactions.Data.Models
 {
@@ -22,15 +21,10 @@ namespace TrTransactions.Data.Models
         public DateTime CreatedAt { get; set; }
 
         /// <summary>
-        /// Валюта
-        /// </summary>
-        public virtual CurrencyType CurrencyType { get; set; }
-
-        /// <summary>
         /// Ид валюты
         /// </summary>
         [Required]
-        public string CurrencyTypeId { get; set; }
+        public string CurrencyId { get; set; }
 
         /// <summary>
         /// Ид пользователя

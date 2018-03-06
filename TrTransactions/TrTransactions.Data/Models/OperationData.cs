@@ -15,7 +15,7 @@ namespace TrTransactions.Data.Models
         /// <summary>
         /// Валюта продажи
         /// </summary>
-        public string CurrencyTypeId { get; set; }
+        public string CurrencyId { get; set; }
 
         /// <summary>
         /// Сумма продажи
@@ -25,7 +25,7 @@ namespace TrTransactions.Data.Models
         /// <summary>
         /// Валюта покупки
         /// </summary>
-        public string BuyCurrencyTypeId { get; set; }
+        public string BuyCurrencyId { get; set; }
 
         /// <summary>
         /// Сумма покупки

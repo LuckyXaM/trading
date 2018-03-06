@@ -12,7 +12,7 @@ using TrTransactions.Data.Models;
 namespace TrTransactions.Migrations
 {
     [DbContext(typeof(TrTransactionsContext))]
-    [Migration("20180228191437_init")]
+    [Migration("20180306202254_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,19 +21,6 @@ namespace TrTransactions.Migrations
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
-
-            modelBuilder.Entity("TrTransactions.Data.Models.CurrencyType", b =>
-                {
-                    b.Property<string>("TransactionTypeId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Title")
-                        .IsRequired();
-
-                    b.HasKey("TransactionTypeId");
-
-                    b.ToTable("CurrencyTypes");
-                });
 
             modelBuilder.Entity("TrTransactions.Data.Models.Transaction", b =>
                 {
@@ -44,7 +31,7 @@ namespace TrTransactions.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("CurrencyTypeId")
+                    b.Property<string>("CurrencyId")
                         .IsRequired();
 
                     b.Property<int>("TransactionType");
@@ -53,17 +40,7 @@ namespace TrTransactions.Migrations
 
                     b.HasKey("TransactionId");
 
-                    b.HasIndex("CurrencyTypeId");
-
                     b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("TrTransactions.Data.Models.Transaction", b =>
-                {
-                    b.HasOne("TrTransactions.Data.Models.CurrencyType", "CurrencyType")
-                        .WithMany()
-                        .HasForeignKey("CurrencyTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

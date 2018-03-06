@@ -101,7 +101,7 @@ namespace TrTransactions.Service.Services.Logic
 
                 if (result)
                 {
-                    await ReCreateReserves(new List<OperationData> { new OperationData { CurrencyTypeId = currencyTypeId, UserId = userId } });
+                    await ReCreateReserves(new List<OperationData> { new OperationData { CurrencyId = currencyTypeId, UserId = userId } });
                 }
 
                 return result;
@@ -126,7 +126,7 @@ namespace TrTransactions.Service.Services.Logic
 
                 foreach (var item in operationData)
                 {
-                    var reservedTransaction = _transactionRepository.GetList(item.UserId, item.CurrencyTypeId, TransactionType.Reserve);
+                    var reservedTransaction = _transactionRepository.GetList(item.UserId, item.CurrencyId, TransactionType.Reserve);
                     var reservedTransactionSum = await reservedTransaction.SumAsync(s => s.Ammount) * -1;
 
                     if (reservedTransactionSum >= item.Ammount)
@@ -135,21 +135,21 @@ namespace TrTransactions.Service.Services.Logic
                             new Transaction {
                                 Ammount = item.Ammount,
                                 CreatedAt = DateTime.UtcNow,
-                                CurrencyTypeId = item.CurrencyTypeId.ToUpper(),
+                                CurrencyId = item.CurrencyId.ToUpper(),
                                 TransactionType = TransactionType.Reserve,
                                 UserId = item.UserId
                             },
                             new Transaction {
                                 Ammount = item.Ammount * -1,
                                 CreatedAt = DateTime.UtcNow,
-                                CurrencyTypeId = item.CurrencyTypeId.ToUpper(),
+                                CurrencyId = item.CurrencyId.ToUpper(),
                                 TransactionType = TransactionType.Ask,
                                 UserId = item.UserId
                             },
                             new Transaction {
                                 Ammount = item.BuyAmmount,
                                 CreatedAt = DateTime.UtcNow,
-                                CurrencyTypeId = item.BuyCurrencyTypeId.ToUpper(),
+                                CurrencyId = item.BuyCurrencyId.ToUpper(),
                                 TransactionType = TransactionType.Bid,
                                 UserId = item.UserId
                             }
@@ -196,7 +196,7 @@ namespace TrTransactions.Service.Services.Logic
 
                 if (result)
                 {
-                    await ReCreateReserves(new List<OperationData> { new OperationData { CurrencyTypeId = currencyTypeId, UserId = userId } });
+                    await ReCreateReserves(new List<OperationData> { new OperationData { CurrencyId = currencyTypeId, UserId = userId } });
                 }
 
                 return result;
@@ -235,7 +235,7 @@ namespace TrTransactions.Service.Services.Logic
                 {
                     Ammount = ammount,
                     CreatedAt = DateTime.UtcNow,
-                    CurrencyTypeId = currencyTypeId.ToUpper(),
+                    CurrencyId = currencyTypeId.ToUpper(),
                     TransactionType = transactionType,
                     UserId = userId
                 };
@@ -262,7 +262,7 @@ namespace TrTransactions.Service.Services.Logic
             {
                 foreach (var item in operationData)
                 {
-                    var transactions = await _transactionRepository.GetList(item.UserId, item.CurrencyTypeId, TransactionType.Reserve).ToListAsync();
+                    var transactions = await _transactionRepository.GetList(item.UserId, item.CurrencyId, TransactionType.Reserve).ToListAsync();
                     var transactionsSum = transactions.Sum(s => s.Ammount);
 
                     if (transactionsSum != 0)
@@ -271,7 +271,7 @@ namespace TrTransactions.Service.Services.Logic
                         {
                             Ammount = transactionsSum,
                             CreatedAt = DateTime.UtcNow,
-                            CurrencyTypeId = item.CurrencyTypeId.ToUpper(),
+                            CurrencyId = item.CurrencyId.ToUpper(),
                             UserId = item.UserId,
                             TransactionType = TransactionType.Reserve
                         };

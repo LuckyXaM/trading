@@ -22,16 +22,16 @@ namespace TrDeals.Data.Models
         public DateTime CreatedAt { get; set; }
 
         /// <summary>
-        /// Валюта
+        /// Ид валюты продажи
         /// </summary>
         [Required]
-        public virtual CurrencyType CurrencyType { get; set; }
+        public string CurrencyFromId { get; set; }
 
         /// <summary>
-        /// Ид валюты
+        /// Ид валюты покупки
         /// </summary>
         [Required]
-        public string CurrencyTypeId { get; set; }
+        public string CurrencyToId { get; set; }
 
         /// <summary>
         /// Ид пользователя

@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TrDeals.Data;
-using TrDeals.Data.DataSeeders.Interfaces;
-using TrDeals.Data.DataSeeders.Logic;
 using TrDeals.Data.Infrastructure.Interfaces;
 using TrDeals.Data.Infrastructure.Logic;
 using TrDeals.Data.Repositories.Interfaces;
@@ -44,7 +42,6 @@ namespace TrDeals
                                 errorCodesToAdd: null);
                         });
                 }, ServiceLifetime.Scoped);
-            services.AddSingleton<IDataSeeder, DataSeeder>();
             services.AddScoped<IDealRepository, DealRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -53,13 +50,9 @@ namespace TrDeals
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            // Применение миграций
+            //Применение миграций
             var dbContext = app.ApplicationServices.GetService<TrDealsContext>();
             dbContext.Database.Migrate();
-
-            // Заполнение справочников
-            var dataSeeder = app.ApplicationServices.GetRequiredService<IDataSeeder>();
-            dataSeeder.SeedCurrencies().GetAwaiter().GetResult();
         }
     }
 }

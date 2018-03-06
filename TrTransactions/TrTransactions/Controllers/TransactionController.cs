@@ -14,7 +14,7 @@ namespace TrTransactions.Controllers
     [ApiExplorerSettings(GroupName = "transaction")]
     public class TransactionController : Controller
     {
-        #region
+        #region Поля, свойства
 
         /// <summary>
         /// Сервис управления транзакциями
@@ -23,7 +23,7 @@ namespace TrTransactions.Controllers
 
         #endregion
 
-        #region
+        #region Конструктор
 
         /// <summary>
         /// APi для управления транзакциями
@@ -37,44 +37,44 @@ namespace TrTransactions.Controllers
 
         #endregion
 
-        #region
+        #region Методы
 
         /// <summary>
         /// Получает баланс пользователя
         /// </summary>
         /// <param name="userId">Ид пользователя</param>
-        /// <param name="currencyTypeId">Валюта</param>
+        /// <param name="currencyId">Валюта</param>
         /// <returns></returns>
-        [HttpGet("balance/{userId}/{currencyTypeId}")]
-        public async Task<decimal> GetBalanceAsync(Guid userId, string currencyTypeId)
+        [HttpGet("balance/{userId}/{currencyId}")]
+        public async Task<decimal> GetBalanceAsync(Guid userId, string currencyId)
         {
-            return await _transactionService.GetBalanceAsync(userId, currencyTypeId);
+            return await _transactionService.GetBalanceAsync(userId, currencyId);
         }
 
         /// <summary>
         /// Пополняет баланс пользователя
         /// </summary>
         /// <param name="userId">Ид пользователя</param>
-        /// <param name="currencyTypeId">Валюта</param>
+        /// <param name="currencyId">Валюта</param>
         /// <param name="ammount">Сумма</param>
         /// <returns></returns>
-        [HttpPost("replenishment/{userId}/{currencyTypeId}/{ammount}")]
-        public async Task<bool> ReplenishmentAsync(Guid userId, string currencyTypeId, decimal ammount)
+        [HttpPost("replenishment/{userId}/{currencyId}/{ammount}")]
+        public async Task<bool> ReplenishmentAsync(Guid userId, string currencyId, decimal ammount)
         {
-            return await _transactionService.ReplenishmentAsync(userId, currencyTypeId, ammount);
+            return await _transactionService.ReplenishmentAsync(userId, currencyId, ammount);
         }
 
         /// <summary>
         /// Резервирует средства пользователя
         /// </summary>
         /// <param name="userId">Ид пользователя</param>
-        /// <param name="currencyTypeId">Валюта</param>
+        /// <param name="currencyId">Валюта</param>
         /// <param name="ammount">Сумма</param>
         /// <returns></returns>
-        [HttpPost("reserve/{userId}/{currencyTypeId}/{ammount}")]
-        public async Task<bool> ReserveAsync(Guid userId, string currencyTypeId, decimal ammount)
+        [HttpPost("reserve/{userId}/{currencyId}/{ammount}")]
+        public async Task<bool> ReserveAsync(Guid userId, string currencyId, decimal ammount)
         {
-            return await _transactionService.ReserveAsync(userId, currencyTypeId, ammount);
+            return await _transactionService.ReserveAsync(userId, currencyId, ammount);
         }
 
         /// <summary>
@@ -92,13 +92,13 @@ namespace TrTransactions.Controllers
         /// Удаляет резерв
         /// </summary>
         /// <param name="userId">Ид пользователя</param>
-        /// <param name="currencyTypeId">Валюта</param>
+        /// <param name="currencyId">Валюта</param>
         /// <param name="ammount">Сумма</param>
         /// <returns></returns>
-        [HttpPost("unReserve/{userId}/{currencyTypeId}/{ammount}")]
-        public async Task<bool> RemoveReserveAsync(Guid userId, string currencyTypeId, decimal ammount)
+        [HttpPost("unReserve/{userId}/{currencyId}/{ammount}")]
+        public async Task<bool> RemoveReserveAsync(Guid userId, string currencyId, decimal ammount)
         {
-            return await _transactionService.RemoveReserveAsync(userId, currencyTypeId, ammount);
+            return await _transactionService.RemoveReserveAsync(userId, currencyId, ammount);
         }
 
         #endregion

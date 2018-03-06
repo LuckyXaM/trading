@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2026
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{FF61F760-B246-45E3-9E82-82E2C8F644D3}"
 EndProject
@@ -23,7 +23,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrDeals.Data", "TrDeals\TrD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedServices", "SharedServices", "{39FDBE58-A528-416E-8C2F-89D9750A6454}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrModels", "SharedServices\TrModels\TrModels.csproj", "{AC510714-38B4-4086-8CC0-66F74A3EF9A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrModels", "SharedServices\TrModels\TrModels.csproj", "{AC510714-38B4-4086-8CC0-66F74A3EF9A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Currencies", "Currencies", "{133CB0D5-07C5-4F2E-AD8B-BAE4FF3DF7C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrCurrencies", "TrCurrencies\TrCurrencies\TrCurrencies.csproj", "{260A4571-F2CB-4B4A-8025-0B35F3A2AB2E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrCurrencies.Service", "TrCurrencies\TrCurrencies.Service\TrCurrencies.Service.csproj", "{F5BB3CE5-CEA8-4095-97F7-16A207226D03}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrCurrencies.Data", "TrCurrencies\TrCurrencies.Data\TrCurrencies.Data.csproj", "{B43EE5BE-C684-416E-8A2B-1B1F06F6A5E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrCurrencyClient", "SharedServices\TrCurrencyClient\TrCurrencyClient.csproj", "{B73A77BD-90BC-41EF-845B-DB5A3E2A5D5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +73,22 @@ Global
 		{AC510714-38B4-4086-8CC0-66F74A3EF9A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC510714-38B4-4086-8CC0-66F74A3EF9A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC510714-38B4-4086-8CC0-66F74A3EF9A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{260A4571-F2CB-4B4A-8025-0B35F3A2AB2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{260A4571-F2CB-4B4A-8025-0B35F3A2AB2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{260A4571-F2CB-4B4A-8025-0B35F3A2AB2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{260A4571-F2CB-4B4A-8025-0B35F3A2AB2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5BB3CE5-CEA8-4095-97F7-16A207226D03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5BB3CE5-CEA8-4095-97F7-16A207226D03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5BB3CE5-CEA8-4095-97F7-16A207226D03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5BB3CE5-CEA8-4095-97F7-16A207226D03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B43EE5BE-C684-416E-8A2B-1B1F06F6A5E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B43EE5BE-C684-416E-8A2B-1B1F06F6A5E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B43EE5BE-C684-416E-8A2B-1B1F06F6A5E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B43EE5BE-C684-416E-8A2B-1B1F06F6A5E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B73A77BD-90BC-41EF-845B-DB5A3E2A5D5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B73A77BD-90BC-41EF-845B-DB5A3E2A5D5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B73A77BD-90BC-41EF-845B-DB5A3E2A5D5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B73A77BD-90BC-41EF-845B-DB5A3E2A5D5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +101,10 @@ Global
 		{F2D842FD-69D5-450E-AF07-19DFB6741232} = {B310CF6B-BDA7-4C8D-B265-9515D3482B46}
 		{91423D5A-3FF4-4F2A-8E67-F3E76A8437FE} = {B310CF6B-BDA7-4C8D-B265-9515D3482B46}
 		{AC510714-38B4-4086-8CC0-66F74A3EF9A9} = {39FDBE58-A528-416E-8C2F-89D9750A6454}
+		{260A4571-F2CB-4B4A-8025-0B35F3A2AB2E} = {133CB0D5-07C5-4F2E-AD8B-BAE4FF3DF7C1}
+		{F5BB3CE5-CEA8-4095-97F7-16A207226D03} = {133CB0D5-07C5-4F2E-AD8B-BAE4FF3DF7C1}
+		{B43EE5BE-C684-416E-8A2B-1B1F06F6A5E9} = {133CB0D5-07C5-4F2E-AD8B-BAE4FF3DF7C1}
+		{B73A77BD-90BC-41EF-845B-DB5A3E2A5D5E} = {39FDBE58-A528-416E-8C2F-89D9750A6454}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B13BA413-9E64-419A-8F9D-0E9AC0948BC6}

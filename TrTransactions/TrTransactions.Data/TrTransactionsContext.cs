@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TrModels;
 using TrTransactions.Data.Models;
 
 namespace TrTransactions.Data
@@ -15,11 +14,6 @@ namespace TrTransactions.Data
         /// Транзакция
         /// </summary>
         public DbSet<Transaction> Transactions { get; set; }
-
-        /// <summary>
-        /// Тип валюты
-        /// </summary>
-        public DbSet<CurrencyType> CurrencyTypes { get; set; }
 
         #endregion
 

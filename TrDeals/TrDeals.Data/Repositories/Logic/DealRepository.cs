@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using TrDeals.Data.Models;
 using TrDeals.Data.Repositories.Interfaces;
-using TrModels;
 
 namespace TrDeals.Data.Repositories.Logic
 {
@@ -81,24 +78,6 @@ namespace TrDeals.Data.Repositories.Logic
         public void GetBids(decimal ammount)
         {
             _context.Bids.Where(a => a.Ammount <= ammount);
-        }
-
-        /// <summary>
-        /// Получает типы валют
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<CurrencyType> GetCurrencyTypes(IEnumerable<string> currencyTypes)
-        {
-            return _context.CurrencyTypes.AsNoTracking()
-                .Where(c => currencyTypes.Contains(c.TransactionTypeId.ToUpper()));
-        }
-
-        /// <summary>
-        /// Добавляет типы валют
-        /// </summary>
-        public void AddCurrencyTypes(IEnumerable<CurrencyType> currencyTypes)
-        {
-            _context.CurrencyTypes.AddRange(currencyTypes);
         }
 
         #endregion

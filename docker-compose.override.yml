@@ -1,23 +1,32 @@
 version: '3'
 
 services:
-  tr-transactions:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - DbConnectionString=${TR_DB:-Host=postgresql.data;Port=5432;Database=tr-transactions;Username=tr-user;Password=postgres1}
-    ports:
-      - "8005:80"
-  tr-deals:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - DbConnectionString=${TR_DB:-Host=postgresql.data;Port=5432;Database=tr-deals;Username=tr-user;Password=postgres1}
-    ports:
-      - "8004:80"
-
   postgresql.data:
     environment:
       - POSTGRES_PASSWORD=postgres1
       - POSTGRES_USER=tr-user
     ports:
       - "5432:5432"
+
+  tr-transactions:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DbConnectionString=${TR_DB:-Host=postgresql.data;Port=5432;Database=tr-transactions;Username=tr-user;Password=postgres1}
+      - CurrencyUrl=http://tr-currencies
+    ports:
+      - "8005:80"
+  tr-deals:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DbConnectionString=${TR_DB:-Host=postgresql.data;Port=5432;Database=tr-deals;Username=tr-user;Password=postgres1}
+      - CurrencyUrl=http://tr-currencies
+    ports:
+      - "8004:80"
+
+  tr-currencies:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DbConnectionString=${TR_DB:-Host=postgresql.data;Port=5432;Database=tr-currencies;Username=tr-user;Password=postgres1}
+    ports:
+      - "8003:80"
 
