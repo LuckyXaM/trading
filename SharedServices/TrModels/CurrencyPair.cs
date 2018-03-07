@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Xml.Serialization;
 
 namespace TrModels
 {
@@ -19,14 +18,12 @@ namespace TrModels
         /// Ид валюты продажи
         /// </summary>
         [Required]
-        [XmlAttribute("from")]
         public string CurrencyPairFromId { get; set; }
 
         /// <summary>
         /// Ид валюты покупки
         /// </summary>
         [Required]
-        [XmlAttribute("to")]
         public string CurrencyPairToId { get; set; }
 
         /// <summary>

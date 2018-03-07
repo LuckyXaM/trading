@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
-using TrModels;
 
 namespace TrCurrencies.Data.Models
 {
@@ -14,6 +13,6 @@ namespace TrCurrencies.Data.Models
         /// Валюты
         /// </summary>
         [XmlElement("currency")]
-        public List<Currency> Currencies { get; set; }
+        public List<CurrencyXml> Currencies { get; set; }
     }
 }

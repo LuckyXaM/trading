@@ -1,22 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Xml.Serialization;
 
-namespace TrModels
+namespace TrCurrencies.Data.Models
 {
     /// <summary>
     /// Валюта
     /// </summary>
-    public class Currency
+    public class CurrencyXml
     {
-        /// <summary>
+        // <summary>
         /// Ид валюты
         /// </summary>
-        [Key]
+        [XmlAttribute("code")]
         public string CurrencyId { get; set; }
 
         /// <summary>
         /// Валюта
         /// </summary>
-        [Required]
+        [XmlAttribute("name")]
         public string Name { get; set; }
     }
 }

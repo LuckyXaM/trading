@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AutoMapper;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -99,7 +100,7 @@ namespace TrCurrencies.Data.DataSeeders.Logic
                 var serializer = new XmlSerializer(typeof(CurrencyFormat));
                 var currencyFormat = (CurrencyFormat)serializer.Deserialize(reader);
                 currencyFormat.Currencies.ForEach(c => c.CurrencyId = c.CurrencyId.ToUpper());
-                _currencies = currencyFormat.Currencies;
+                _currencies = Mapper.Map<List<CurrencyXml>, List<Currency>>(currencyFormat.Currencies);
             }
         }
 
@@ -114,7 +115,7 @@ namespace TrCurrencies.Data.DataSeeders.Logic
                 var currencyPairFormat = (CurrencyPairFormat)serializer.Deserialize(reader);
                 currencyPairFormat.CurrencyPairs.ForEach(c => c.CurrencyPairFromId = c.CurrencyPairFromId.ToUpper());
                 currencyPairFormat.CurrencyPairs.ForEach(c => c.CurrencyPairToId = c.CurrencyPairToId.ToUpper());
-                _currencyPairs = currencyPairFormat.CurrencyPairs;
+                _currencyPairs = Mapper.Map<List<CurrencyPairXml>, List<CurrencyPair>>(currencyPairFormat.CurrencyPairs);
             }
         }
 

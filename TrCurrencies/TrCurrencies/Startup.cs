@@ -12,6 +12,7 @@ using TrCurrencies.Data.DataSeeders.Interfaces;
 using TrCurrencies.Data.DataSeeders.Logic;
 using TrCurrencies.Data.Infrastructure.Interfaces;
 using TrCurrencies.Data.Infrastructure.Logic;
+using TrCurrencies.Data.Mappings.Configurations;
 using TrCurrencies.Data.Repositories.Interfaces;
 using TrCurrencies.Data.Repositories.Logic;
 using TrCurrencies.Service.Services.Interfaces;
@@ -58,7 +59,6 @@ namespace TrCurrencies
             services.AddMvcCore()
                 .AddApiExplorer()
                 .AddJsonFormatters();
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("currency", new Info { Title = "Отслеживание валют", Version = "currency" });
@@ -67,6 +67,13 @@ namespace TrCurrencies
                 c.IncludeXmlComments(xmlPath);
                 c.IgnoreObsoleteProperties();
             });
+
+            // Добавление автомаппера
+            var config = new AutoMapper.MapperConfiguration(c =>
+            {
+                AutoMapperConfiguration.Configure();
+            });
+            var mapper = config.CreateMapper();
 
             return services.BuildServiceProvider();
         }
