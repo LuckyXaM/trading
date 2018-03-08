@@ -7,6 +7,7 @@ using TrTransactions.Service.Services.Interfaces;
 using TrTransactions.Data.Infrastructure.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
+using TrModels.Transaction;
 
 namespace TrTransactions.Service.Services.Logic
 {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TrDeals.Data.Models;
-using TrModels;
 
 namespace TrDeals.Data
 {
@@ -12,14 +11,9 @@ namespace TrDeals.Data
         #region Свойства (Таблицы)
 
         /// <summary>
-        /// Аски
+        /// Предложения
         /// </summary>
-        public DbSet<Ask> Asks { get; set; }
-
-        /// <summary>
-        /// Биды
-        /// </summary>
-        public DbSet<Bid> Bids { get; set; }
+        public DbSet<Offer> Offers { get; set; }
 
         #endregion
 

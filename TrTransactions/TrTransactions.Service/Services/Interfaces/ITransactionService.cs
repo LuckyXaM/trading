@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TrTransactions.Data.Models;
+using TrModels.Transaction;
 
 namespace TrTransactions.Service.Services.Interfaces
 {

@@ -39,6 +39,7 @@ bld/
 *.VisualState.xml
 TrTransactions.xml
 TrCurrencies.xml
+TrDeals.xml
 
 # Build Results of an ATL Project
 [Dd]ebugPS/

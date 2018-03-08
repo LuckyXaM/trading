@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TrModels.Transaction;
 using TrTransactions.Data.Models;
 using TrTransactions.Service.Services.Interfaces;
 

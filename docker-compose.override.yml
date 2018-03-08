@@ -12,14 +12,15 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DbConnectionString=${TR_DB:-Host=postgresql.data;Port=5432;Database=tr-transactions;Username=tr-user;Password=postgres1}
-      - CurrencyUrl=http://tr-currencies
     ports:
       - "8005:80"
+
   tr-deals:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DbConnectionString=${TR_DB:-Host=postgresql.data;Port=5432;Database=tr-deals;Username=tr-user;Password=postgres1}
       - CurrencyUrl=http://tr-currencies
+      - TransactionUrl=http://tr-transactions
     ports:
       - "8004:80"
 

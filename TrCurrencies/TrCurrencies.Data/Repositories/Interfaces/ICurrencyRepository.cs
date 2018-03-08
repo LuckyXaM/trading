@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TrModels;
+using TrModels.Currency;
 
 namespace TrCurrencies.Data.Repositories.Interfaces
 {

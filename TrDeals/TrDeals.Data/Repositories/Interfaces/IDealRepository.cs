@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using TrDeals.Data.Models;
-using TrModels;
 
 namespace TrDeals.Data.Repositories.Interfaces
 {
@@ -10,33 +9,18 @@ namespace TrDeals.Data.Repositories.Interfaces
     public interface IDealRepository
     {
         /// <summary>
-        /// Добавляет аск
+        /// Добавляет предложение
         /// </summary>
-        void AddAsk(Ask ask);
+        void AddOffer(Offer offer);
 
         /// <summary>
-        /// Удаляет аск
+        /// Удаляет предложение
         /// </summary>
-        void RemoveAsk(Ask ask);
+        void RemoveOffer(Offer offer);
 
         /// <summary>
-        /// Получает аски
+        /// Получает предложение
         /// </summary>
-        void GetAsks(decimal ammount);
-
-        /// <summary>
-        /// Добавляет бид
-        /// </summary>
-        void AddBid(Bid bid);
-
-        /// <summary>
-        /// Удаляет бид
-        /// </summary>
-        void RemoveBid(Bid bid);
-
-        /// <summary>
-        /// Получает биды
-        /// </summary>
-        void GetBids(decimal ammount);
+        Offer GetOffer(Guid offerId, Guid userId);
     }
 }

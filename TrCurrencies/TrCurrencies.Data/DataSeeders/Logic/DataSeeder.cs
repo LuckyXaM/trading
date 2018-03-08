@@ -10,7 +10,7 @@ using TrCurrencies.Data.DataSeeders.Interfaces;
 using TrCurrencies.Data.Infrastructure.Interfaces;
 using TrCurrencies.Data.Models;
 using TrCurrencies.Data.Repositories.Interfaces;
-using TrModels;
+using TrModels.Currency;
 
 namespace TrCurrencies.Data.DataSeeders.Logic
 {

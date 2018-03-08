@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TrCurrencies.Service.Services.Interfaces;
-using TrModels;
+using TrModels.Currency;
 
 namespace TrCurrencies.Controllers
 {
@@ -37,6 +37,17 @@ namespace TrCurrencies.Controllers
         #endregion
 
         #region Методы
+
+        /// <summary>
+        /// Проверяет наличие валют
+        /// </summary>
+        /// <param name="currencyIds">Ид валют</param>
+        /// <returns></returns>
+        [HttpGet("checkCurrencies")]
+        public async Task<bool> CheckCurrency([FromQuery]List<string> currencyIds)
+        {
+            return await _currencyService.CheckCurrencies(currencyIds);
+        }
 
         /// <summary>
         /// Проверяет наличие валюты

@@ -3,6 +3,7 @@ using TrCurrencyClient.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace TrCurrencyClient.Logic
 {
@@ -30,7 +31,7 @@ namespace TrCurrencyClient.Logic
         /// <summary>
         /// Клиент валют
         /// </summary>
-        private CurrencyClient(
+        public CurrencyClient(
             IConfiguration configuration
             )
         {
@@ -40,6 +41,36 @@ namespace TrCurrencyClient.Logic
         #endregion
 
         #region Методы
+
+        /// <summary>
+        /// Проверяет наличие валют
+        /// </summary>
+        /// <param name="currencyId">Ид валют</param>
+        /// <returns></returns>
+        public async Task<bool> CheckCurrencies(List<string> currencyIds)
+        {
+            if (currencyIds == null || currencyIds.Count == 0)
+            {
+                return false;
+            }
+
+            var uri = "";
+
+            foreach (var item in currencyIds)
+            {
+                uri = string.IsNullOrEmpty(uri)
+                    ? $"{_serviceBaseUrl}/api/currency/checkCurrencies?currencyIds={item}"
+                    : uri + $"&currencyIds={item}";
+            }
+
+            using (_client)
+            {
+                var response = await _client.GetAsync(uri);
+                var result = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+
+                return result;
+            }
+        }
 
         /// <summary>
         /// Проверяет наличие валюты

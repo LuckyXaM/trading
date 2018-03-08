@@ -1,19 +1,17 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using TrModels;
-
 namespace TrDeals.Data.Models
 {
     /// <summary>
-    /// Аск
+    /// Предложение
     /// </summary>
-    public class Ask
+    public class Offer
     {
         /// <summary>
-        /// Ид аска
+        /// Ид предложения
         /// </summary>
         [Key]
-        public Guid AskId { get; set; }
+        public Guid OfferId { get; set; }
 
         /// <summary>
         /// Дата создания
@@ -44,5 +42,11 @@ namespace TrDeals.Data.Models
         /// </summary>
         [Required]
         public decimal Ammount { get; set; }
+
+        /// <summary>
+        /// Курс
+        /// </summary>
+        [Required]
+        public decimal Course { get; set; }
     }
 }

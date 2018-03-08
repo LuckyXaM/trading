@@ -6,12 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\SharedServices\TrCurrencyClient\TrCurrencyClient.csproj" />
+    <ProjectReference Include="..\..\SharedServices\TrTransactionClient\TrTransactionClient.csproj" />
     <ProjectReference Include="..\TrDeals.Data\TrDeals.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Interfaces\" />
-    <Folder Include="Services\Logic\" />
   </ItemGroup>
 
 </Project>

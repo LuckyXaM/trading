@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TrTransactions.Data.Models
+namespace TrModels.Transaction
 {
     /// <summary>
     /// Данные операций

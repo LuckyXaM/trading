@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace TrModels
+namespace TrModels.Currency
 {
     /// <summary>
     /// Валютная пара

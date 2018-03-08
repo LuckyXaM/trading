@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using TrCurrencies.Data.Models;
-using TrModels;
+using TrModels.Currency;
 
 namespace TrCurrencies.Data.Mappings.Profiles
 {

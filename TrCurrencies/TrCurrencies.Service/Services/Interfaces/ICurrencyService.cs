@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TrModels;
+using TrModels.Currency;
 
 namespace TrCurrencies.Service.Services.Interfaces
 {
@@ -9,6 +9,12 @@ namespace TrCurrencies.Service.Services.Interfaces
     /// </summary>
     public interface ICurrencyService
     {
+        /// <summary>
+        /// Проверяет наличие валют
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> CheckCurrencies(List<string> currencyIds);
+
         /// <summary>
         /// Проверяет наличие валюты
         /// </summary>

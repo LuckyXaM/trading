@@ -11,7 +11,7 @@ using TrDeals.Data;
 namespace TrDeals.Migrations
 {
     [DbContext(typeof(TrDealsContext))]
-    [Migration("20180306202716_init")]
+    [Migration("20180308163058_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,12 +21,14 @@ namespace TrDeals.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
-            modelBuilder.Entity("TrDeals.Data.Models.Ask", b =>
+            modelBuilder.Entity("TrDeals.Data.Models.Offer", b =>
                 {
-                    b.Property<Guid>("AskId")
+                    b.Property<Guid>("OfferId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<decimal>("Ammount");
+
+                    b.Property<decimal>("Course");
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -38,31 +40,9 @@ namespace TrDeals.Migrations
 
                     b.Property<Guid>("UserId");
 
-                    b.HasKey("AskId");
+                    b.HasKey("OfferId");
 
-                    b.ToTable("Asks");
-                });
-
-            modelBuilder.Entity("TrDeals.Data.Models.Bid", b =>
-                {
-                    b.Property<Guid>("AskId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<decimal>("Ammount");
-
-                    b.Property<DateTime>("CreatedAt");
-
-                    b.Property<string>("CurrencyFromId")
-                        .IsRequired();
-
-                    b.Property<string>("CurrencyToId")
-                        .IsRequired();
-
-                    b.Property<Guid>("UserId");
-
-                    b.HasKey("AskId");
-
-                    b.ToTable("Bids");
+                    b.ToTable("Offers");
                 });
 #pragma warning restore 612, 618
         }

@@ -88,6 +88,7 @@ namespace TrCurrencies
             var dataSeeder = app.ApplicationServices.GetRequiredService<IDataSeeder>();
             dataSeeder.SeedDataAsync().GetAwaiter().GetResult();
 
+            // Подключение документации
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
