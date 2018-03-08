@@ -50,7 +50,7 @@ namespace TrDeals
                                 errorCodesToAdd: null);
                         });
                 }, ServiceLifetime.Scoped);
-            services.AddScoped<IDealRepository, DealRepository>();
+            services.AddScoped<IOfferRepository, OfferRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<ICurrencyClient, CurrencyClient>();

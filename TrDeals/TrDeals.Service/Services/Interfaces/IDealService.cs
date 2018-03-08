@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using TrDeals.Data.Models;
 
 namespace TrDeals.Service.Services.Interfaces
 {
@@ -19,5 +21,11 @@ namespace TrDeals.Service.Services.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<bool> RemoveOfferAsync(Guid askId, Guid userId);
+
+        /// <summary>
+        /// Получает предложения пользователя
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Offer>> GetOffersAsync(Guid userId);
     }
 }

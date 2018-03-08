@@ -1,15 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TrDeals.Data.Models;
 using TrDeals.Data.Repositories.Interfaces;
 
 namespace TrDeals.Data.Repositories.Logic
 {
     /// <summary>
-    /// Репозиторий транзакций
+    /// Репозиторий предложений
     /// </summary>
-    public class DealRepository : IDealRepository
+    public class OfferRepository : IOfferRepository
     {
         #region Свойства
 
@@ -25,7 +27,7 @@ namespace TrDeals.Data.Repositories.Logic
         /// <summary>
         /// Конструктор по-умолчанию
         /// </summary>
-        public DealRepository(TrDealsContext context)
+        public OfferRepository(TrDealsContext context)
         {
             _context = context;
         }
@@ -58,7 +60,18 @@ namespace TrDeals.Data.Repositories.Logic
             return _context.Offers.AsNoTracking()
                 .FirstOrDefault(a => a.OfferId == offerId && a.UserId == userId);
         }
-        
+
+        /// <summary>
+        /// Получает предложения пользователя
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Offer>> GetOffers(Guid userId)
+        {
+            return await _context.Offers.AsNoTracking()
+                .Where(o => o.UserId == userId)
+                .ToListAsync();
+        }
+
         #endregion
     }
 }

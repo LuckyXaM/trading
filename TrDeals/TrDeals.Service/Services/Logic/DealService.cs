@@ -30,7 +30,7 @@ namespace TrDeals.Service.Services.Logic
         /// <summary>
         /// Репозиторий транзакций
         /// </summary>
-        private readonly IDealRepository _dealRepository;
+        private readonly IOfferRepository _offerRepository;
 
         /// <summary>
         /// Единица работы с БД
@@ -47,13 +47,13 @@ namespace TrDeals.Service.Services.Logic
         public DealService(
             ICurrencyClient currencyClient,
             ITransactionClient transactionClient,
-            IDealRepository dealRepository,
+            IOfferRepository offerRepository,
             IUnitOfWork unitOfWork
             )
         {
             _currencyClient = currencyClient;
             _transactionClient = transactionClient;
-            _dealRepository = dealRepository;
+            _offerRepository = offerRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -85,7 +85,7 @@ namespace TrDeals.Service.Services.Logic
                 OfferId = Guid.NewGuid()
             };
 
-            _dealRepository.AddOffer(offer);
+            _offerRepository.AddOffer(offer);
 
             await _unitOfWork.SaveChangesAsync();
 
@@ -98,11 +98,11 @@ namespace TrDeals.Service.Services.Logic
         /// <returns></returns>
         public async Task<bool> RemoveOfferAsync(Guid offerId, Guid userId)
         {
-            var offer = _dealRepository.GetOffer(offerId, userId);
+            var offer = _offerRepository.GetOffer(offerId, userId);
 
             if (offer != null)
             {
-                _dealRepository.RemoveOffer(offer);
+                _offerRepository.RemoveOffer(offer);
 
                 var transactionResult = await _transactionClient.RemoveReserveAsync(userId, offer.CurrencyFromId, offer.Ammount);
 
@@ -121,6 +121,17 @@ namespace TrDeals.Service.Services.Logic
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Получает предложения пользователя
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Offer>> GetOffersAsync(Guid userId)
+        {
+            var result = await _offerRepository.GetOffers(userId);
+
+            return result;
         }
 
         #endregion
