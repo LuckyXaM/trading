@@ -63,10 +63,10 @@ namespace TrTransactions.Data.Repositories.Logic
         /// <summary>
         /// Получает все транзакции пользователя
         /// </summary>
-        public IQueryable<Transaction> GetList(Guid abonentId, string currencyId)
+        public IQueryable<Transaction> GetList(Guid userId, string currencyId)
         {
             return _context.Transactions.AsNoTracking()
-                .Where(t => t.UserId == abonentId && t.CurrencyId == currencyId.ToUpper());
+                .Where(t => t.UserId == userId && t.CurrencyId == currencyId.ToUpper());
         }
 
         /// <summary>

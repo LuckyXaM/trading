@@ -24,6 +24,12 @@ namespace TrDeals.Migrations
                 {
                     table.PrimaryKey("PK_Offers", x => x.OfferId);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Offers_UserId",
+                table: "Offers",
+                column: "UserId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

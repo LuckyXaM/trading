@@ -41,6 +41,9 @@ namespace TrDeals.Migrations
 
                     b.HasKey("OfferId");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("Offers");
                 });
 #pragma warning restore 612, 618

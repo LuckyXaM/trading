@@ -23,6 +23,12 @@ namespace TrTransactions.Migrations
                 {
                     table.PrimaryKey("PK_Transactions", x => x.TransactionId);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transactions_UserId",
+                table: "Transactions",
+                column: "UserId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

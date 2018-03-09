@@ -27,5 +27,19 @@ namespace TrTransactions.Data
         }
 
         #endregion
+
+        #region Методы
+
+        /// <summary>
+        /// Модифицирует таблицы
+        /// </summary>
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Transaction>()
+                 .HasIndex(u => u.UserId)
+                 .IsUnique();
+        }
+
+        #endregion
     }
 }

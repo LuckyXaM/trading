@@ -6,12 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
-using TrDeals.Data;
+using TrTransactions.Data;
+using TrTransactions.Data.Models;
 
-namespace TrDeals.Migrations
+namespace TrTransactions.Migrations
 {
-    [DbContext(typeof(TrDealsContext))]
-    [Migration("20180308163058_init")]
+    [DbContext(typeof(TrTransactionsContext))]
+    [Migration("20180309090556_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,28 +22,28 @@ namespace TrDeals.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
-            modelBuilder.Entity("TrDeals.Data.Models.Offer", b =>
+            modelBuilder.Entity("TrTransactions.Data.Models.Transaction", b =>
                 {
-                    b.Property<Guid>("OfferId")
+                    b.Property<Guid>("TransactionId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<decimal>("Ammount");
 
-                    b.Property<decimal>("Course");
-
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("CurrencyFromId")
+                    b.Property<string>("CurrencyId")
                         .IsRequired();
 
-                    b.Property<string>("CurrencyToId")
-                        .IsRequired();
+                    b.Property<int>("TransactionType");
 
                     b.Property<Guid>("UserId");
 
-                    b.HasKey("OfferId");
+                    b.HasKey("TransactionId");
 
-                    b.ToTable("Offers");
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Transactions");
                 });
 #pragma warning restore 612, 618
         }

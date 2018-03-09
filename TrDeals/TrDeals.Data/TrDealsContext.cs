@@ -27,5 +27,19 @@ namespace TrDeals.Data
         }
 
         #endregion
+
+        #region Методы
+
+        /// <summary>
+        /// Модифицирует таблицы
+        /// </summary>
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Offer>()
+                 .HasIndex(u => u.UserId)
+                 .IsUnique();
+        }
+
+        #endregion
     }
 }

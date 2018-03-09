@@ -39,6 +39,9 @@ namespace TrTransactions.Migrations
 
                     b.HasKey("TransactionId");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("Transactions");
                 });
 #pragma warning restore 612, 618

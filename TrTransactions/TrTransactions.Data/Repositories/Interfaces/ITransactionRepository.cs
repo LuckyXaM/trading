@@ -30,7 +30,7 @@ namespace TrTransactions.Data.Repositories.Interfaces
         /// Получает все транзакции пользователя
         /// </summary>
         /// <returns></returns>
-        IQueryable<Transaction> GetList(Guid abonentId, string currencyTypeId);
+        IQueryable<Transaction> GetList(Guid userId, string currencyTypeId);
 
         /// <summary>
         /// Удаляет транзакции
