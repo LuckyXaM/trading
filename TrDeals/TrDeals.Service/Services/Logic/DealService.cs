@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TrCurrencyClient.Interfaces;
 using TrDeals.Data.Infrastructure.Interfaces;
@@ -72,22 +73,36 @@ namespace TrDeals.Service.Services.Logic
                 return false;
             }
 
-            var offer = new Offer
+            try
             {
-                UserId = userId,
-                CreatedAt = DateTime.UtcNow,
-                Ammount = ammount,
-                CurrencyFromId = currencyFromId,
-                CurrencyToId = currencyToId,
-                Course = course,
-                OfferId = Guid.NewGuid()
-            };
 
-            _offerRepository.AddOffer(offer);
+                var sameOffers = (await _offerRepository.GetOffers(userId))
+                    .Where(o => o.Course == course && o.CurrencyFromId == currencyFromId && o.CurrencyToId == currencyToId);
 
-            await _unitOfWork.SaveChangesAsync();
+                var offer = new Offer
+                {
+                    UserId = userId,
+                    CreatedAt = DateTime.UtcNow,
+                    Ammount = ammount + sameOffers.Sum(o => o.Ammount),
+                    CurrencyFromId = currencyFromId,
+                    CurrencyToId = currencyToId,
+                    Course = course,
+                    OfferId = Guid.NewGuid()
+                };
 
-            return true;
+                _offerRepository.RemoveOffers(sameOffers);
+                _offerRepository.AddOffer(offer);
+
+                await _unitOfWork.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                await _transactionClient.RemoveReserveAsync(userId, currencyFromId, ammount);
+
+                return false;
+            }
         }
 
         /// <summary>

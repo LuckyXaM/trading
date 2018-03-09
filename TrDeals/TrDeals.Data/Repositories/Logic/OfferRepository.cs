@@ -53,6 +53,14 @@ namespace TrDeals.Data.Repositories.Logic
         }
 
         /// <summary>
+        /// Удаляет предложения
+        /// </summary>
+        public void RemoveOffers(IEnumerable<Offer> offers)
+        {
+            _context.Offers.RemoveRange(offers);
+        }
+
+        /// <summary>
         /// Получает предложение
         /// </summary>
         public Offer GetOffer(Guid offerId, Guid userId)

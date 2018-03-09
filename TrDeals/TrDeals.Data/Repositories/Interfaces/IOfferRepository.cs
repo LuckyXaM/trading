@@ -21,6 +21,11 @@ namespace TrDeals.Data.Repositories.Interfaces
         void RemoveOffer(Offer offer);
 
         /// <summary>
+        /// Удаляет предложения
+        /// </summary>
+        void RemoveOffers(IEnumerable<Offer> offers);
+
+        /// <summary>
         /// Получает предложение
         /// </summary>
         Offer GetOffer(Guid offerId, Guid userId);
