@@ -37,31 +37,6 @@ namespace TrCurrencies.Service.Services.Logic
         #region Методы
 
         /// <summary>
-        /// Проверяет наличие валют
-        /// </summary>
-        /// <returns></returns>
-        public async Task<bool> CheckCurrencies(List<string> currencyIds)
-        {
-            if (currencyIds == null || currencyIds.Count == 0)
-            {
-                return false;
-            }
-
-            foreach (var item in currencyIds)
-            {
-                var currency = await _currencyRepository.GetCurrency(item.ToUpper());
-
-                if (currency == null)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-
-        /// <summary>
         /// Проверяет наличие валюты
         /// </summary>
         /// <returns></returns>

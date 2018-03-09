@@ -6,13 +6,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
-using TrTransactions.Data;
-using TrTransactions.Data.Models;
+using TrDeals.Data;
 
-namespace TrTransactions.Migrations
+namespace TrDeals.Migrations
 {
-    [DbContext(typeof(TrTransactionsContext))]
-    [Migration("20180309090556_init")]
+    [DbContext(typeof(TrDealsContext))]
+    [Migration("20180309092752_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,28 +21,30 @@ namespace TrTransactions.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
-            modelBuilder.Entity("TrTransactions.Data.Models.Transaction", b =>
+            modelBuilder.Entity("TrDeals.Data.Models.Offer", b =>
                 {
-                    b.Property<Guid>("TransactionId")
+                    b.Property<Guid>("OfferId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<decimal>("Ammount");
 
+                    b.Property<decimal>("Course");
+
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<string>("CurrencyId")
+                    b.Property<string>("CurrencyFromId")
                         .IsRequired();
 
-                    b.Property<int>("TransactionType");
+                    b.Property<string>("CurrencyToId")
+                        .IsRequired();
 
                     b.Property<Guid>("UserId");
 
-                    b.HasKey("TransactionId");
+                    b.HasKey("OfferId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("Offers");
                 });
 #pragma warning restore 612, 618
         }

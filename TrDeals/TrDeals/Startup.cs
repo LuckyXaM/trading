@@ -63,7 +63,7 @@ namespace TrDeals
                 .AddJsonFormatters();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("deal", new Info { Title = "Отслеживание валют", Version = "deal" });
+                c.SwaggerDoc("deal", new Info { Title = "Предложения", Version = "deal" });
 
                 var xmlPath = Path.Combine(_env.ContentRootPath, "TrDeals.xml");
                 c.IncludeXmlComments(xmlPath);

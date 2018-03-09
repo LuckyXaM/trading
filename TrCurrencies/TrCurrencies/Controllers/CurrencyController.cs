@@ -39,17 +39,6 @@ namespace TrCurrencies.Controllers
         #region Методы
 
         /// <summary>
-        /// Проверяет наличие валют
-        /// </summary>
-        /// <param name="currencyIds">Ид валют</param>
-        /// <returns></returns>
-        [HttpGet("checkCurrencies")]
-        public async Task<bool> CheckCurrency([FromQuery]List<string> currencyIds)
-        {
-            return await _currencyService.CheckCurrencies(currencyIds);
-        }
-
-        /// <summary>
         /// Проверяет наличие валюты
         /// </summary>
         /// <param name="currencyId">Ид валюты</param>

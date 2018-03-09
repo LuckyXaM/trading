@@ -36,8 +36,7 @@ namespace TrDeals.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Offer>()
-                 .HasIndex(u => u.UserId)
-                 .IsUnique();
+                 .HasIndex(u => u.UserId);
         }
 
         #endregion

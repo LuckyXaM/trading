@@ -43,36 +43,6 @@ namespace TrCurrencyClient.Logic
         #region Методы
 
         /// <summary>
-        /// Проверяет наличие валют
-        /// </summary>
-        /// <param name="currencyId">Ид валют</param>
-        /// <returns></returns>
-        public async Task<bool> CheckCurrencies(List<string> currencyIds)
-        {
-            if (currencyIds == null || currencyIds.Count == 0)
-            {
-                return false;
-            }
-
-            var uri = "";
-
-            foreach (var item in currencyIds)
-            {
-                uri = string.IsNullOrEmpty(uri)
-                    ? $"{_serviceBaseUrl}/api/currency/checkCurrencies?currencyIds={item}"
-                    : uri + $"&currencyIds={item}";
-            }
-
-            using (_client)
-            {
-                var response = await _client.GetAsync(uri);
-                var result = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
-
-                return result;
-            }
-        }
-
-        /// <summary>
         /// Проверяет наличие валюты
         /// </summary>
         /// <param name="currencyId">Ид валюты</param>

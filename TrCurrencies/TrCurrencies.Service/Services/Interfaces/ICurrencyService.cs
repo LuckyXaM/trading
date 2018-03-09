@@ -10,12 +10,6 @@ namespace TrCurrencies.Service.Services.Interfaces
     public interface ICurrencyService
     {
         /// <summary>
-        /// Проверяет наличие валют
-        /// </summary>
-        /// <returns></returns>
-        Task<bool> CheckCurrencies(List<string> currencyIds);
-
-        /// <summary>
         /// Проверяет наличие валюты
         /// </summary>
         /// <returns></returns>

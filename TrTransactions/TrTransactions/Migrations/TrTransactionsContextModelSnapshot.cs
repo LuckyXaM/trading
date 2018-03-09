@@ -39,8 +39,7 @@ namespace TrTransactions.Migrations
 
                     b.HasKey("TransactionId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Transactions");
                 });

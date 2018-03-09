@@ -41,8 +41,7 @@ namespace TrDeals.Migrations
 
                     b.HasKey("OfferId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Offers");
                 });

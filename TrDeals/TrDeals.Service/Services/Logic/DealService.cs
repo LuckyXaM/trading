@@ -67,9 +67,7 @@ namespace TrDeals.Service.Services.Logic
         /// <returns></returns>
         public async Task<bool> AddOfferAsync(Guid userId, string currencyFromId, string currencyToId, decimal ammount, decimal course)
         {
-            var currencies = new List<string> { currencyFromId, currencyToId };
-
-            if (ammount == 0 || course == 0 || !await _currencyClient.CheckCurrencies(currencies) || !await _transactionClient.ReserveAsync(userId, currencyFromId, ammount))
+            if (ammount == 0 || course == 0 || !await _currencyClient.CheckCurrencyPair(currencyFromId, currencyToId) || !await _transactionClient.ReserveAsync(userId, currencyFromId, ammount))
             {
                 return false;
             }

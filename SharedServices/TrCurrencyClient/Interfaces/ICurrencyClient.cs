@@ -9,13 +9,6 @@ namespace TrCurrencyClient.Interfaces
     public interface ICurrencyClient
     {
         /// <summary>
-        /// Проверяет наличие валют
-        /// </summary>
-        /// <param name="currencyId">Ид валют</param>
-        /// <returns></returns>
-        Task<bool> CheckCurrencies(List<string> currencyIds);
-
-        /// <summary>
         /// Проверяет наличие валюты
         /// </summary>
         /// <param name="currencyId">Ид валюты</param>
