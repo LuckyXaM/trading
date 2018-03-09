@@ -80,6 +80,15 @@ namespace TrDeals.Data.Repositories.Logic
         }
 
         /// <summary>
+        /// Получает предложение
+        /// </summary>
+        public Offer GetOffer(Guid userId, string currencyPairFromId, string currencyPairToId, decimal price)
+        {
+            return _context.Offers.AsNoTracking()
+                .FirstOrDefault(o => o.UserId == userId && o.CurrencyFromId == currencyPairFromId && o.CurrencyToId == currencyPairToId && o.Price == price);
+        }
+
+        /// <summary>
         /// Получает предложения пользователя
         /// </summary>
         /// <returns></returns>

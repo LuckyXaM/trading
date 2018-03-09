@@ -31,6 +31,11 @@ namespace TrDeals.Data.Repositories.Interfaces
         Offer GetOffer(Guid offerId, Guid userId);
 
         /// <summary>
+        /// Получает предложение
+        /// </summary>
+        Offer GetOffer(Guid userId, string currencyPairFromId, string currencyPairToId, decimal price);
+
+        /// <summary>
         /// Получает предложения
         /// </summary>
         Task<List<Offer>> GetOffers(string currencyPairFromId, string currencyPairToId, decimal price);

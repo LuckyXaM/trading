@@ -97,11 +97,10 @@ namespace TrDeals.Service.Services.Logic
 
                 await _unitOfWork.SaveChangesAsync();
 
-                
-                var offers = (await _offerRepository.GetOffers(currencyToId, currencyFromId, MathOperations.RoudDivision(1, price)))
-                    .OrderByDescending(o => o.Price);
 
-                await Matching(volume, price, userId, offers);
+                var offers = (await _offerRepository.GetOffers(currencyToId, currencyFromId, MathOperations.RoudDivision(1, price)));
+
+                await Matching(volume, price, userId, offers, currencyFromId, currencyToId);
 
                 return true;
             }
@@ -162,74 +161,106 @@ namespace TrDeals.Service.Services.Logic
         /// <summary>
         /// Находит подходящие предложения и осуществляет сделки
         /// </summary>
-        private async Task Matching(decimal volume, decimal price, Guid userId, IOrderedEnumerable<Offer> offers)
+        private async Task Matching(decimal volume, decimal price, Guid userId, List<Offer> offers, string currencyFromId, string currencyToId)
         {
-            var operationDatas = new List<OperationData>();
-
-            while (volume > 0)
+            if (offers != null && offers.Count > 0)
             {
-                foreach (var item in offers)
+                var operationDatas = new List<OperationData>();
+
+                while (volume > 0)
                 {
-                    if (volume > 0)
+                    foreach (var item in offers.OrderByDescending(o => o.Price))
                     {
-                        var volumeToSell = MathOperations.RoundMultiplication(MathOperations.RoudDivision(1, item.Price), item.Volume);
-                        var volumeToGet = MathOperations.RoundMultiplication(MathOperations.RoudDivision(1, price), volume);
-
-                        decimal sellSellVolume = 0;
-                        decimal sellBuyVolume = 0;
-                        decimal buySellVolume = 0;
-                        decimal buyBuyVolume = 0;
-
-                        if (volume >= volumeToSell)
+                        if (volume > 0)
                         {
-                            sellSellVolume = item.Volume;
-                            sellBuyVolume = volumeToSell;
-                            buySellVolume = volumeToSell;
-                            buyBuyVolume = volumeToGet;
+                            var volumeToSell = MathOperations.RoundMultiplication(MathOperations.RoudDivision(1, item.Price), item.Volume);
+                            var volumeToGet = MathOperations.RoundMultiplication(MathOperations.RoudDivision(1, price), volume);
 
+                            decimal sellSellVolume = 0;
+                            decimal sellBuyVolume = 0;
+                            decimal buySellVolume = 0;
+                            decimal buyBuyVolume = 0;
 
+                            if (volume >= volumeToSell)
+                            {
+                                sellSellVolume = item.Volume;
+                                sellBuyVolume = volumeToSell;
+                                buySellVolume = volumeToSell;
+                                buyBuyVolume = volumeToGet;
+                            }
+                            else
+                            {
+                                sellSellVolume = volumeToGet;
+                                sellBuyVolume = volume;
+                                buySellVolume = volume;
+                                buyBuyVolume = item.Volume;
+
+                                var finalOffer = new Offer
+                                {
+                                    CreatedAt = DateTime.UtcNow,
+                                    CurrencyFromId = item.CurrencyFromId,
+                                    CurrencyToId = item.CurrencyToId,
+                                    Price = item.Price,
+                                    UserId = item.UserId,
+                                    Volume = item.Volume - buySellVolume
+                                };
+
+                                _offerRepository.AddOffer(finalOffer);
+                            }
+
+                            _offerRepository.RemoveOffer(item);
+
+                            // Операция в пользу продающего
+                            var operationDataSell = new OperationData
+                            {
+                                UserId = item.UserId,
+                                CurrencyId = item.CurrencyFromId,
+                                BuyCurrencyId = item.CurrencyToId,
+                                SellVolume = sellSellVolume,
+                                BuyVolume = sellBuyVolume
+                            };
+
+                            // Операция в пользу покупающего
+                            var operationDataBuy = new OperationData
+                            {
+                                UserId = userId,
+                                CurrencyId = item.CurrencyToId,
+                                BuyCurrencyId = item.CurrencyFromId,
+                                SellVolume = buySellVolume,
+                                BuyVolume = buyBuyVolume
+                            };
+
+                            operationDatas.Add(operationDataSell);
+                            operationDatas.Add(operationDataBuy);
+
+                            volume = volume - volumeToSell;
                         }
-                        else
-                        {
-                            sellSellVolume = volumeToGet;
-                            sellBuyVolume = volume;
-                            buySellVolume = volume;
-                            buyBuyVolume = item.Volume;
-
-
-
-                        }
-
-                        // Операция в пользу продающего
-                        var operationDataSell = new OperationData
-                        {
-                            UserId = item.UserId,
-                            CurrencyId = item.CurrencyFromId,
-                            BuyCurrencyId = item.CurrencyToId,
-                            SellVolume = sellSellVolume,
-                            BuyVolume = sellBuyVolume
-                        };
-
-                        // Операция в пользу покупающего
-                        var operationDataBuy = new OperationData
-                        {
-                            UserId = userId,
-                            CurrencyId = item.CurrencyToId,
-                            BuyCurrencyId = item.CurrencyFromId,
-                            SellVolume = buySellVolume,
-                            BuyVolume = buyBuyVolume
-                        };
-
-
-                        operationDatas.Add(operationDataSell);
-                        operationDatas.Add(operationDataBuy);
-
-                        volume = volume - volumeToSell;
                     }
                 }
-            }
 
-            await _transactionClient.BuyAsync(operationDatas);
+                if (volume > 0)
+                {
+                    var finalOffer = new Offer
+                    {
+                        CreatedAt = DateTime.UtcNow,
+                        CurrencyFromId = currencyFromId,
+                        CurrencyToId = currencyToId,
+                        Price = price,
+                        UserId = userId,
+                        Volume = volume
+                    };
+
+                    _offerRepository.AddOffer(finalOffer);
+                }
+
+                var offerToRemove = _offerRepository.GetOffer(userId, currencyToId, currencyFromId, price);
+                _offerRepository.RemoveOffer(offerToRemove);
+
+                if (await _transactionClient.BuyAsync(operationDatas))
+                {
+                    await _unitOfWork.SaveChangesAsync();
+                }
+            }
         }
 
         #endregion
