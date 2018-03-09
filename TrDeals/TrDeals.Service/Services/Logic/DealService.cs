@@ -7,6 +7,8 @@ using TrDeals.Data.Infrastructure.Interfaces;
 using TrDeals.Data.Models;
 using TrDeals.Data.Repositories.Interfaces;
 using TrDeals.Service.Services.Interfaces;
+using TrModels.Transaction;
+using TrOperations.Service;
 using TrTransactionClient.Interfaces;
 
 namespace TrDeals.Service.Services.Logic
@@ -84,8 +86,8 @@ namespace TrDeals.Service.Services.Logic
                     UserId = userId,
                     CreatedAt = DateTime.UtcNow,
                     Volume = volume + sameOffers.Sum(o => o.Volume),
-                    CurrencyFromId = currencyFromId,
-                    CurrencyToId = currencyToId,
+                    CurrencyFromId = currencyFromId.ToUpper(),
+                    CurrencyToId = currencyToId.ToUpper(),
                     Price = price,
                     OfferId = Guid.NewGuid()
                 };
@@ -94,6 +96,12 @@ namespace TrDeals.Service.Services.Logic
                 _offerRepository.AddOffer(offer);
 
                 await _unitOfWork.SaveChangesAsync();
+
+                
+                var offers = (await _offerRepository.GetOffers(currencyToId, currencyFromId, MathOperations.RoudDivision(1, price)))
+                    .OrderByDescending(o => o.Price);
+
+                await Matching(volume, price, userId, offers);
 
                 return true;
             }
@@ -150,6 +158,79 @@ namespace TrDeals.Service.Services.Logic
         #endregion
 
         #region Методы(private)
+
+        /// <summary>
+        /// Находит подходящие предложения и осуществляет сделки
+        /// </summary>
+        private async Task Matching(decimal volume, decimal price, Guid userId, IOrderedEnumerable<Offer> offers)
+        {
+            var operationDatas = new List<OperationData>();
+
+            while (volume > 0)
+            {
+                foreach (var item in offers)
+                {
+                    if (volume > 0)
+                    {
+                        var volumeToSell = MathOperations.RoundMultiplication(MathOperations.RoudDivision(1, item.Price), item.Volume);
+                        var volumeToGet = MathOperations.RoundMultiplication(MathOperations.RoudDivision(1, price), volume);
+
+                        decimal sellSellVolume = 0;
+                        decimal sellBuyVolume = 0;
+                        decimal buySellVolume = 0;
+                        decimal buyBuyVolume = 0;
+
+                        if (volume >= volumeToSell)
+                        {
+                            sellSellVolume = item.Volume;
+                            sellBuyVolume = volumeToSell;
+                            buySellVolume = volumeToSell;
+                            buyBuyVolume = volumeToGet;
+
+
+                        }
+                        else
+                        {
+                            sellSellVolume = volumeToGet;
+                            sellBuyVolume = volume;
+                            buySellVolume = volume;
+                            buyBuyVolume = item.Volume;
+
+
+
+                        }
+
+                        // Операция в пользу продающего
+                        var operationDataSell = new OperationData
+                        {
+                            UserId = item.UserId,
+                            CurrencyId = item.CurrencyFromId,
+                            BuyCurrencyId = item.CurrencyToId,
+                            SellVolume = sellSellVolume,
+                            BuyVolume = sellBuyVolume
+                        };
+
+                        // Операция в пользу покупающего
+                        var operationDataBuy = new OperationData
+                        {
+                            UserId = userId,
+                            CurrencyId = item.CurrencyToId,
+                            BuyCurrencyId = item.CurrencyFromId,
+                            SellVolume = buySellVolume,
+                            BuyVolume = buyBuyVolume
+                        };
+
+
+                        operationDatas.Add(operationDataSell);
+                        operationDatas.Add(operationDataBuy);
+
+                        volume = volume - volumeToSell;
+                    }
+                }
+            }
+
+            await _transactionClient.BuyAsync(operationDatas);
+        }
 
         #endregion
     }

@@ -13,11 +13,11 @@ namespace TrTransactions.Migrations
                 columns: table => new
                 {
                     TransactionId = table.Column<Guid>(nullable: false),
-                    Ammount = table.Column<decimal>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     CurrencyId = table.Column<string>(nullable: false),
                     TransactionType = table.Column<int>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    UserId = table.Column<Guid>(nullable: false),
+                    Volume = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {

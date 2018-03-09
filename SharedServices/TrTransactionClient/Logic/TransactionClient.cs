@@ -50,11 +50,11 @@ namespace TrTransactionClient.Logic
         /// </summary>
         /// <param name="userId">Ид пользователя</param>
         /// <param name="currencyId">Ид валюты</param>
-        /// <param name="ammount">Сумма</param>
+        /// <param name="volume">Сумма</param>
         /// <returns></returns>
-        public async Task<bool> RemoveReserveAsync(Guid userId, string currencyId, decimal ammount)
+        public async Task<bool> RemoveReserveAsync(Guid userId, string currencyId, decimal volume)
         {
-            var uri = $"{_serviceBaseUrl}/api/transaction/unReserve/{userId}/{currencyId}/{ammount}";
+            var uri = $"{_serviceBaseUrl}/api/transaction/unReserve/{userId}/{currencyId}/{volume}";
 
             using (_client)
             {
@@ -70,11 +70,11 @@ namespace TrTransactionClient.Logic
         /// </summary>
         /// <param name="userId">Ид пользователя</param>
         /// <param name="currencyId">Ид валюты</param>
-        /// <param name="ammount">Сумма</param>
+        /// <param name="volume">Сумма</param>
         /// <returns></returns>
-        public async Task<bool> ReserveAsync(Guid userId, string currencyId, decimal ammount)
+        public async Task<bool> ReserveAsync(Guid userId, string currencyId, decimal volume)
         {
-            var uri = $"{_serviceBaseUrl}/api/transaction/reserve/{userId}/{currencyId}/{ammount}";
+            var uri = $"{_serviceBaseUrl}/api/transaction/reserve/{userId}/{currencyId}/{volume}";
 
             using (_client)
             {

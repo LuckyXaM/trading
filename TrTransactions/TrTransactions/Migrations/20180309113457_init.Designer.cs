@@ -12,7 +12,7 @@ using TrTransactions.Data.Models;
 namespace TrTransactions.Migrations
 {
     [DbContext(typeof(TrTransactionsContext))]
-    [Migration("20180309092717_init")]
+    [Migration("20180309113457_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,8 +27,6 @@ namespace TrTransactions.Migrations
                     b.Property<Guid>("TransactionId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("Ammount");
-
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("CurrencyId")
@@ -37,6 +35,8 @@ namespace TrTransactions.Migrations
                     b.Property<int>("TransactionType");
 
                     b.Property<Guid>("UserId");
+
+                    b.Property<decimal>("Volume");
 
                     b.HasKey("TransactionId");
 

@@ -87,22 +87,22 @@ namespace TrTransactions.Service.Services.Logic
         /// <summary>
         /// Резервирует средства пользователя
         /// </summary>
-        public async Task<bool> ReserveAsync(Guid userId, string currencyTypeId, decimal ammount)
+        public async Task<bool> ReserveAsync(Guid userId, string currencyId, decimal ammount)
         {
             if (ammount == 0)
             {
                 return false;
             }
 
-            var balance = await GetUserBalanceAsync(userId, currencyTypeId);
+            var balance = await GetUserBalanceAsync(userId, currencyId);
 
             if (balance >= ammount)
             {
-                var result = await AddTransaction(TransactionType.Reserve, ammount * -1, userId, currencyTypeId);
+                var result = await AddTransaction(TransactionType.Reserve, ammount * -1, userId, currencyId);
 
                 if (result)
                 {
-                    await ReCreateReserves(new List<OperationData> { new OperationData { CurrencyId = currencyTypeId, UserId = userId } });
+                    await ReCreateReserves(new List<OperationData> { new OperationData { CurrencyId = currencyId, UserId = userId } });
                 }
 
                 return result;
@@ -117,7 +117,7 @@ namespace TrTransactions.Service.Services.Logic
         /// <returns></returns>
         public async Task<bool> BuyAsync(List<OperationData> operationData)
         {
-            if (operationData.Any(o => o.Ammount == 0 || o.BuyAmmount == 0))
+            if (operationData.Any(o => o.SellVolume == 0 || o.BuyVolume == 0))
             {
                 return false;
             }
@@ -128,27 +128,27 @@ namespace TrTransactions.Service.Services.Logic
                 foreach (var item in operationData)
                 {
                     var reservedTransaction = _transactionRepository.GetList(item.UserId, item.CurrencyId, TransactionType.Reserve);
-                    var reservedTransactionSum = await reservedTransaction.SumAsync(s => s.Ammount) * -1;
+                    var reservedTransactionSum = await reservedTransaction.SumAsync(s => s.Volume) * -1;
 
-                    if (reservedTransactionSum >= item.Ammount)
+                    if (reservedTransactionSum >= item.SellVolume)
                     {
                         var transactions = new List<Transaction> {
                             new Transaction {
-                                Ammount = item.Ammount,
+                                Volume = item.SellVolume,
                                 CreatedAt = DateTime.UtcNow,
                                 CurrencyId = item.CurrencyId.ToUpper(),
                                 TransactionType = TransactionType.Reserve,
                                 UserId = item.UserId
                             },
                             new Transaction {
-                                Ammount = item.Ammount * -1,
+                                Volume = item.SellVolume * -1,
                                 CreatedAt = DateTime.UtcNow,
                                 CurrencyId = item.CurrencyId.ToUpper(),
                                 TransactionType = TransactionType.Ask,
                                 UserId = item.UserId
                             },
                             new Transaction {
-                                Ammount = item.BuyAmmount,
+                                Volume = item.BuyVolume,
                                 CreatedAt = DateTime.UtcNow,
                                 CurrencyId = item.BuyCurrencyId.ToUpper(),
                                 TransactionType = TransactionType.Bid,
@@ -180,24 +180,24 @@ namespace TrTransactions.Service.Services.Logic
         /// Удаляет резерв
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> RemoveReserveAsync(Guid userId, string currencyTypeId, decimal ammount)
+        public async Task<bool> RemoveReserveAsync(Guid userId, string currencyId, decimal volume)
         {
-            if (ammount == 0)
+            if (volume == 0)
             {
                 return false;
             }
 
-            var transactions = await _transactionRepository.GetList(userId, currencyTypeId, TransactionType.Reserve)
+            var transactions = await _transactionRepository.GetList(userId, currencyId, TransactionType.Reserve)
                 .ToListAsync();
-            var transactionsSum = transactions.Sum(t => t.Ammount) * -1;
+            var transactionsSum = transactions.Sum(t => t.Volume) * -1;
 
-            if (transactionsSum >= ammount)
+            if (transactionsSum >= volume)
             {
-                var result = await AddTransaction(TransactionType.Reserve, ammount, userId, currencyTypeId);
+                var result = await AddTransaction(TransactionType.Reserve, volume, userId, currencyId);
 
                 if (result)
                 {
-                    await ReCreateReserves(new List<OperationData> { new OperationData { CurrencyId = currencyTypeId, UserId = userId } });
+                    await ReCreateReserves(new List<OperationData> { new OperationData { CurrencyId = currencyId, UserId = userId } });
                 }
 
                 return result;
@@ -216,10 +216,10 @@ namespace TrTransactions.Service.Services.Logic
         /// Получает баланс пользователя
         /// </summary>
         /// <returns></returns>
-        private async Task<decimal> GetUserBalanceAsync(Guid userId, string currencyTypeId)
+        private async Task<decimal> GetUserBalanceAsync(Guid userId, string currencyId)
         {
-            var result = await _transactionRepository.GetList(userId, currencyTypeId)
-                .SumAsync(s => s.Ammount);
+            var result = await _transactionRepository.GetList(userId, currencyId)
+                .SumAsync(s => s.Volume);
 
             return result;
         }
@@ -228,13 +228,13 @@ namespace TrTransactions.Service.Services.Logic
         /// Добавляет транзакцию
         /// </summary>
         /// <returns></returns>
-        private async Task<bool> AddTransaction(TransactionType transactionType, decimal ammount, Guid userId, string currencyTypeId)
+        private async Task<bool> AddTransaction(TransactionType transactionType, decimal volume, Guid userId, string currencyTypeId)
         {
             try
             {
                 var transaction = new Transaction
                 {
-                    Ammount = ammount,
+                    Volume = volume,
                     CreatedAt = DateTime.UtcNow,
                     CurrencyId = currencyTypeId.ToUpper(),
                     TransactionType = transactionType,
@@ -264,13 +264,13 @@ namespace TrTransactions.Service.Services.Logic
                 foreach (var item in operationData)
                 {
                     var transactions = await _transactionRepository.GetList(item.UserId, item.CurrencyId, TransactionType.Reserve).ToListAsync();
-                    var transactionsSum = transactions.Sum(s => s.Ammount);
+                    var transactionsSum = transactions.Sum(s => s.Volume);
 
                     if (transactionsSum != 0)
                     {
                         var transaction = new Transaction
                         {
-                            Ammount = transactionsSum,
+                            Volume = transactionsSum,
                             CreatedAt = DateTime.UtcNow,
                             CurrencyId = item.CurrencyId.ToUpper(),
                             UserId = item.UserId,

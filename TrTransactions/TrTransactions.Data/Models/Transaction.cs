@@ -36,7 +36,7 @@ namespace TrTransactions.Data.Models
         /// Сумма
         /// </summary>
         [Required]
-        public decimal Ammount { get; set; }
+        public decimal Volume { get; set; }
 
         /// <summary>
         /// Тип транзакции

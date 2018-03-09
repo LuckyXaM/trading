@@ -57,12 +57,12 @@ namespace TrTransactions.Controllers
         /// </summary>
         /// <param name="userId">Ид пользователя</param>
         /// <param name="currencyId">Валюта</param>
-        /// <param name="ammount">Сумма</param>
+        /// <param name="volume">Сумма</param>
         /// <returns></returns>
-        [HttpPost("replenishment/{userId}/{currencyId}/{ammount}")]
-        public async Task<bool> ReplenishmentAsync(Guid userId, string currencyId, decimal ammount)
+        [HttpPost("replenishment/{userId}/{currencyId}/{volume}")]
+        public async Task<bool> ReplenishmentAsync(Guid userId, string currencyId, decimal volume)
         {
-            return await _transactionService.ReplenishmentAsync(userId, currencyId, ammount);
+            return await _transactionService.ReplenishmentAsync(userId, currencyId, volume);
         }
 
         /// <summary>
@@ -70,12 +70,12 @@ namespace TrTransactions.Controllers
         /// </summary>
         /// <param name="userId">Ид пользователя</param>
         /// <param name="currencyId">Валюта</param>
-        /// <param name="ammount">Сумма</param>
+        /// <param name="volume">Сумма</param>
         /// <returns></returns>
-        [HttpPost("reserve/{userId}/{currencyId}/{ammount}")]
-        public async Task<bool> ReserveAsync(Guid userId, string currencyId, decimal ammount)
+        [HttpPost("reserve/{userId}/{currencyId}/{volume}")]
+        public async Task<bool> ReserveAsync(Guid userId, string currencyId, decimal volume)
         {
-            return await _transactionService.ReserveAsync(userId, currencyId, ammount);
+            return await _transactionService.ReserveAsync(userId, currencyId, volume);
         }
 
         /// <summary>
@@ -94,12 +94,12 @@ namespace TrTransactions.Controllers
         /// </summary>
         /// <param name="userId">Ид пользователя</param>
         /// <param name="currencyId">Валюта</param>
-        /// <param name="ammount">Сумма</param>
+        /// <param name="volume">Сумма</param>
         /// <returns></returns>
-        [HttpPost("unReserve/{userId}/{currencyId}/{ammount}")]
-        public async Task<bool> RemoveReserveAsync(Guid userId, string currencyId, decimal ammount)
+        [HttpPost("unReserve/{userId}/{currencyId}/{volume}")]
+        public async Task<bool> RemoveReserveAsync(Guid userId, string currencyId, decimal volume)
         {
-            return await _transactionService.RemoveReserveAsync(userId, currencyId, ammount);
+            return await _transactionService.RemoveReserveAsync(userId, currencyId, volume);
         }
 
         #endregion

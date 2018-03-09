@@ -11,7 +11,7 @@ using TrDeals.Data;
 namespace TrDeals.Migrations
 {
     [DbContext(typeof(TrDealsContext))]
-    [Migration("20180309094916_init")]
+    [Migration("20180309113451_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +41,12 @@ namespace TrDeals.Migrations
                     b.Property<decimal>("Volume");
 
                     b.HasKey("OfferId");
+
+                    b.HasIndex("CurrencyFromId");
+
+                    b.HasIndex("CurrencyToId");
+
+                    b.HasIndex("Price");
 
                     b.HasIndex("UserId");
 

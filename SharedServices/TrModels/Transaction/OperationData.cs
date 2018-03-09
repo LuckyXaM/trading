@@ -20,7 +20,7 @@ namespace TrModels.Transaction
         /// <summary>
         /// Сумма продажи
         /// </summary>
-        public decimal Ammount { get; set; }
+        public decimal SellVolume { get; set; }
 
         /// <summary>
         /// Валюта покупки
@@ -30,6 +30,6 @@ namespace TrModels.Transaction
         /// <summary>
         /// Сумма покупки
         /// </summary>
-        public decimal BuyAmmount { get; set; }
+        public decimal BuyVolume { get; set; }
     }
 }

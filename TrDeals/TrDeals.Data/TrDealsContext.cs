@@ -37,6 +37,12 @@ namespace TrDeals.Data
         {
             builder.Entity<Offer>()
                  .HasIndex(u => u.UserId);
+            builder.Entity<Offer>()
+                 .HasIndex(u => u.CurrencyFromId);
+            builder.Entity<Offer>()
+                 .HasIndex(u => u.CurrencyToId);
+            builder.Entity<Offer>()
+                 .HasIndex(u => u.Price);
         }
 
         #endregion

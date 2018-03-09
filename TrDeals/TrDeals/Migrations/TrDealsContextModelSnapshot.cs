@@ -41,6 +41,12 @@ namespace TrDeals.Migrations
 
                     b.HasKey("OfferId");
 
+                    b.HasIndex("CurrencyFromId");
+
+                    b.HasIndex("CurrencyToId");
+
+                    b.HasIndex("Price");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Offers");

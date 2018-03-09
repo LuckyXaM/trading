@@ -70,6 +70,16 @@ namespace TrDeals.Data.Repositories.Logic
         }
 
         /// <summary>
+        /// Получает предложения
+        /// </summary>
+        public async Task<List<Offer>> GetOffers(string currencyPairFromId, string currencyPairToId, decimal price)
+        {
+            return await _context.Offers.AsNoTracking()
+                .Where(o => o.CurrencyFromId == currencyPairFromId && o.CurrencyToId == currencyPairToId && o.Price <= 1 / price)
+                .ToListAsync();
+        }
+
+        /// <summary>
         /// Получает предложения пользователя
         /// </summary>
         /// <returns></returns>

@@ -26,6 +26,21 @@ namespace TrDeals.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Offers_CurrencyFromId",
+                table: "Offers",
+                column: "CurrencyFromId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Offers_CurrencyToId",
+                table: "Offers",
+                column: "CurrencyToId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Offers_Price",
+                table: "Offers",
+                column: "Price");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Offers_UserId",
                 table: "Offers",
                 column: "UserId");

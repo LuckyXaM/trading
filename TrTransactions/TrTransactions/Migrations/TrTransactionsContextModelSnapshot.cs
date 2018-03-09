@@ -26,8 +26,6 @@ namespace TrTransactions.Migrations
                     b.Property<Guid>("TransactionId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("Ammount");
-
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("CurrencyId")
@@ -36,6 +34,8 @@ namespace TrTransactions.Migrations
                     b.Property<int>("TransactionType");
 
                     b.Property<Guid>("UserId");
+
+                    b.Property<decimal>("Volume");
 
                     b.HasKey("TransactionId");
 
