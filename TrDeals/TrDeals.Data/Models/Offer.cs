@@ -41,12 +41,12 @@ namespace TrDeals.Data.Models
         /// Сумма
         /// </summary>
         [Required]
-        public decimal Ammount { get; set; }
+        public decimal Volume { get; set; }
 
         /// <summary>
         /// Курс
         /// </summary>
         [Required]
-        public decimal Course { get; set; }
+        public decimal Price { get; set; }
     }
 }

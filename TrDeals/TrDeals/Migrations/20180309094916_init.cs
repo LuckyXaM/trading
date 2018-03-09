@@ -13,12 +13,12 @@ namespace TrDeals.Migrations
                 columns: table => new
                 {
                     OfferId = table.Column<Guid>(nullable: false),
-                    Ammount = table.Column<decimal>(nullable: false),
-                    Course = table.Column<decimal>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     CurrencyFromId = table.Column<string>(nullable: false),
                     CurrencyToId = table.Column<string>(nullable: false),
-                    UserId = table.Column<Guid>(nullable: false)
+                    Price = table.Column<decimal>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    Volume = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {

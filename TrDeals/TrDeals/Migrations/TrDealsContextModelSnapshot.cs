@@ -25,10 +25,6 @@ namespace TrDeals.Migrations
                     b.Property<Guid>("OfferId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("Ammount");
-
-                    b.Property<decimal>("Course");
-
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("CurrencyFromId")
@@ -37,7 +33,11 @@ namespace TrDeals.Migrations
                     b.Property<string>("CurrencyToId")
                         .IsRequired();
 
+                    b.Property<decimal>("Price");
+
                     b.Property<Guid>("UserId");
+
+                    b.Property<decimal>("Volume");
 
                     b.HasKey("OfferId");
 

@@ -62,13 +62,13 @@ namespace TrDeals.Controllers
         /// </summary>
         /// <param name="currencyFromId">Ид валюты продажи</param>
         /// <param name="currencyToId">Ид валюты покупки</param>
-        /// <param name="ammount"> Сумма</param>
-        /// <param name="course">Курс</param>
+        /// <param name="volume"> Сумма</param>
+        /// <param name="price">Курс</param>
         /// <returns></returns>
-        [HttpPost("addOffer/{currencyFromId}/{currencyToId}/{ammount}/{course}")]
-        public async Task<bool> AddOfferAsync(string currencyFromId, string currencyToId, decimal ammount, decimal course)
+        [HttpPost("addOffer/{currencyFromId}/{currencyToId}/{volume}/{price}")]
+        public async Task<bool> AddOfferAsync(string currencyFromId, string currencyToId, decimal volume, decimal price)
         {
-            return await _dealService.AddOfferAsync(_userId, currencyFromId, currencyToId, ammount, course);
+            return await _dealService.AddOfferAsync(_userId, currencyFromId, currencyToId, volume, price);
         }
 
         /// <summary>

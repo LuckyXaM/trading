@@ -66,9 +66,9 @@ namespace TrDeals.Service.Services.Logic
         /// Добавляет предложение
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> AddOfferAsync(Guid userId, string currencyFromId, string currencyToId, decimal ammount, decimal course)
+        public async Task<bool> AddOfferAsync(Guid userId, string currencyFromId, string currencyToId, decimal volume, decimal price)
         {
-            if (ammount == 0 || course == 0 || !await _currencyClient.CheckCurrencyPair(currencyFromId, currencyToId) || !await _transactionClient.ReserveAsync(userId, currencyFromId, ammount))
+            if (volume == 0 || price == 0 || !await _currencyClient.CheckCurrencyPair(currencyFromId, currencyToId) || !await _transactionClient.ReserveAsync(userId, currencyFromId, volume))
             {
                 return false;
             }
@@ -77,16 +77,16 @@ namespace TrDeals.Service.Services.Logic
             {
 
                 var sameOffers = (await _offerRepository.GetOffers(userId))
-                    .Where(o => o.Course == course && o.CurrencyFromId == currencyFromId && o.CurrencyToId == currencyToId);
+                    .Where(o => o.Price == price && o.CurrencyFromId == currencyFromId && o.CurrencyToId == currencyToId);
 
                 var offer = new Offer
                 {
                     UserId = userId,
                     CreatedAt = DateTime.UtcNow,
-                    Ammount = ammount + sameOffers.Sum(o => o.Ammount),
+                    Volume = volume + sameOffers.Sum(o => o.Volume),
                     CurrencyFromId = currencyFromId,
                     CurrencyToId = currencyToId,
-                    Course = course,
+                    Price = price,
                     OfferId = Guid.NewGuid()
                 };
 
@@ -99,7 +99,7 @@ namespace TrDeals.Service.Services.Logic
             }
             catch
             {
-                await _transactionClient.RemoveReserveAsync(userId, currencyFromId, ammount);
+                await _transactionClient.RemoveReserveAsync(userId, currencyFromId, volume);
 
                 return false;
             }
@@ -117,7 +117,7 @@ namespace TrDeals.Service.Services.Logic
             {
                 _offerRepository.RemoveOffer(offer);
 
-                var transactionResult = await _transactionClient.RemoveReserveAsync(userId, offer.CurrencyFromId, offer.Ammount);
+                var transactionResult = await _transactionClient.RemoveReserveAsync(userId, offer.CurrencyFromId, offer.Volume);
 
                 if (transactionResult)
                 {
