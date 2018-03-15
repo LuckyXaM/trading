@@ -77,8 +77,7 @@ namespace TrDeals.Service.Services.Logic
 
             try
             {
-
-                var sameOffers = (await _offerRepository.GetOffers(userId))
+                var sameOffers = (await _offerRepository.GetList(userId))
                     .Where(o => o.Price == price && o.CurrencyFromId == currencyFromId && o.CurrencyToId == currencyToId);
 
                 var offer = new Offer
@@ -92,19 +91,18 @@ namespace TrDeals.Service.Services.Logic
                     OfferId = Guid.NewGuid()
                 };
 
-                _offerRepository.RemoveOffers(sameOffers);
-                _offerRepository.AddOffer(offer);
+                _offerRepository.RemoveRange(sameOffers);
+                _offerRepository.Add(offer);
 
                 await _unitOfWork.SaveChangesAsync();
 
+                var offers = (await _offerRepository.GetList(currencyToId, currencyFromId, MathOperations.RoudDivision(1, price)));
 
-                var offers = (await _offerRepository.GetOffers(currencyToId, currencyFromId, MathOperations.RoudDivision(1, price)));
-
-                await Matching(volume, price, userId, offers, currencyFromId, currencyToId);
+                await Matching(offer.Volume, price, userId, offers, currencyFromId, currencyToId);
 
                 return true;
             }
-            catch
+            catch(Exception e)
             {
                 await _transactionClient.RemoveReserveAsync(userId, currencyFromId, volume);
 
@@ -118,11 +116,11 @@ namespace TrDeals.Service.Services.Logic
         /// <returns></returns>
         public async Task<bool> RemoveOfferAsync(Guid offerId, Guid userId)
         {
-            var offer = _offerRepository.GetOffer(offerId, userId);
+            var offer = _offerRepository.Get(offerId, userId);
 
             if (offer != null)
             {
-                _offerRepository.RemoveOffer(offer);
+                _offerRepository.Remove(offer);
 
                 var transactionResult = await _transactionClient.RemoveReserveAsync(userId, offer.CurrencyFromId, offer.Volume);
 
@@ -149,7 +147,7 @@ namespace TrDeals.Service.Services.Logic
         /// <returns></returns>
         public async Task<List<Offer>> GetOffersAsync(Guid userId)
         {
-            var result = await _offerRepository.GetOffers(userId);
+            var result = await _offerRepository.GetList(userId);
 
             return result;
         }
@@ -205,10 +203,10 @@ namespace TrDeals.Service.Services.Logic
                                     Volume = item.Volume - buySellVolume
                                 };
 
-                                _offerRepository.AddOffer(finalOffer);
+                                _offerRepository.Add(finalOffer);
                             }
 
-                            _offerRepository.RemoveOffer(item);
+                            _offerRepository.Remove(item);
 
                             // Операция в пользу продающего
                             var operationDataSell = new OperationData
@@ -250,11 +248,11 @@ namespace TrDeals.Service.Services.Logic
                         Volume = volume
                     };
 
-                    _offerRepository.AddOffer(finalOffer);
+                    _offerRepository.Add(finalOffer);
                 }
 
-                var offerToRemove = _offerRepository.GetOffer(userId, currencyToId, currencyFromId, price);
-                _offerRepository.RemoveOffer(offerToRemove);
+                var offerToRemove = _offerRepository.Get(userId, currencyToId, currencyFromId, price);
+                _offerRepository.Remove(offerToRemove);
 
                 if (await _transactionClient.BuyAsync(operationDatas))
                 {

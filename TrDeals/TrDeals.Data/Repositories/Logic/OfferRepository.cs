@@ -39,7 +39,7 @@ namespace TrDeals.Data.Repositories.Logic
         /// <summary>
         /// Добавляет предложение
         /// </summary>
-        public void AddOffer(Offer offer)
+        public void Add(Offer offer)
         {
             _context.Offers.Add(offer);
         }
@@ -47,7 +47,7 @@ namespace TrDeals.Data.Repositories.Logic
         /// <summary>
         /// Удаляет предложение
         /// </summary>
-        public void RemoveOffer(Offer offer)
+        public void Remove(Offer offer)
         {
             _context.Offers.Remove(offer);
         }
@@ -55,7 +55,7 @@ namespace TrDeals.Data.Repositories.Logic
         /// <summary>
         /// Удаляет предложения
         /// </summary>
-        public void RemoveOffers(IEnumerable<Offer> offers)
+        public void RemoveRange(IEnumerable<Offer> offers)
         {
             _context.Offers.RemoveRange(offers);
         }
@@ -63,7 +63,7 @@ namespace TrDeals.Data.Repositories.Logic
         /// <summary>
         /// Получает предложение
         /// </summary>
-        public Offer GetOffer(Guid offerId, Guid userId)
+        public Offer Get(Guid offerId, Guid userId)
         {
             return _context.Offers.AsNoTracking()
                 .FirstOrDefault(a => a.OfferId == offerId && a.UserId == userId);
@@ -72,17 +72,17 @@ namespace TrDeals.Data.Repositories.Logic
         /// <summary>
         /// Получает предложения
         /// </summary>
-        public async Task<List<Offer>> GetOffers(string currencyPairFromId, string currencyPairToId, decimal price)
+        public async Task<List<Offer>> GetList(string currencyPairFromId, string currencyPairToId, decimal price)
         {
             return await _context.Offers.AsNoTracking()
-                .Where(o => o.CurrencyFromId == currencyPairFromId && o.CurrencyToId == currencyPairToId && o.Price <= 1 / price)
+                .Where(o => o.CurrencyFromId == currencyPairFromId && o.CurrencyToId == currencyPairToId && o.Price <= price)
                 .ToListAsync();
         }
 
         /// <summary>
         /// Получает предложение
         /// </summary>
-        public Offer GetOffer(Guid userId, string currencyPairFromId, string currencyPairToId, decimal price)
+        public Offer Get(Guid userId, string currencyPairFromId, string currencyPairToId, decimal price)
         {
             return _context.Offers.AsNoTracking()
                 .FirstOrDefault(o => o.UserId == userId && o.CurrencyFromId == currencyPairFromId && o.CurrencyToId == currencyPairToId && o.Price == price);
@@ -92,7 +92,7 @@ namespace TrDeals.Data.Repositories.Logic
         /// Получает предложения пользователя
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Offer>> GetOffers(Guid userId)
+        public async Task<List<Offer>> GetList(Guid userId)
         {
             return await _context.Offers.AsNoTracking()
                 .Where(o => o.UserId == userId)

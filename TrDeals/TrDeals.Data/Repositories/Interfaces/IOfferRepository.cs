@@ -13,37 +13,37 @@ namespace TrDeals.Data.Repositories.Interfaces
         /// <summary>
         /// Добавляет предложение
         /// </summary>
-        void AddOffer(Offer offer);
+        void Add(Offer offer);
 
         /// <summary>
         /// Удаляет предложение
         /// </summary>
-        void RemoveOffer(Offer offer);
+        void Remove(Offer offer);
 
         /// <summary>
         /// Удаляет предложения
         /// </summary>
-        void RemoveOffers(IEnumerable<Offer> offers);
+        void RemoveRange(IEnumerable<Offer> offers);
 
         /// <summary>
         /// Получает предложение
         /// </summary>
-        Offer GetOffer(Guid offerId, Guid userId);
+        Offer Get(Guid offerId, Guid userId);
 
         /// <summary>
         /// Получает предложение
         /// </summary>
-        Offer GetOffer(Guid userId, string currencyPairFromId, string currencyPairToId, decimal price);
+        Offer Get(Guid userId, string currencyPairFromId, string currencyPairToId, decimal price);
 
         /// <summary>
         /// Получает предложения
         /// </summary>
-        Task<List<Offer>> GetOffers(string currencyPairFromId, string currencyPairToId, decimal price);
+        Task<List<Offer>> GetList(string currencyPairFromId, string currencyPairToId, decimal price);
 
         /// <summary>
         /// Получает предложения пользователя
         /// </summary>
         /// <returns></returns>
-        Task<List<Offer>> GetOffers(Guid userId);
+        Task<List<Offer>> GetList(Guid userId);
     }
 }
