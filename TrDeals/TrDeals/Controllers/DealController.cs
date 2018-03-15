@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TrDeals.Data.Models;
 using TrDeals.Service.Services.Interfaces;
+using TrModels.ResourceModels;
 
 namespace TrDeals.Controllers
 {
@@ -51,7 +52,7 @@ namespace TrDeals.Controllers
         /// Удаляет предложение
         /// </summary>
         /// <param name="offerId">Ид предложения</param>
-        [HttpPost("removeOffer/{offerId}")]
+        [HttpDelete("offer/{offerId}")]
         public async Task<bool> RemoveOfferAsync(Guid offerId)
         {
             return await _dealService.RemoveOfferAsync(offerId, _userId);
@@ -65,7 +66,7 @@ namespace TrDeals.Controllers
         /// <param name="volume"> Сумма</param>
         /// <param name="price">Курс</param>
         /// <returns></returns>
-        [HttpPost("addOffer/{currencyFromId}/{currencyToId}/{volume}/{price}")]
+        [HttpPut("offer/{currencyFromId}/{currencyToId}/{volume}/{price}")]
         public async Task<bool> AddOfferAsync(string currencyFromId, string currencyToId, decimal volume, decimal price)
         {
             return await _dealService.AddOfferAsync(_userId, currencyFromId, currencyToId, volume, price);
@@ -75,10 +76,20 @@ namespace TrDeals.Controllers
         /// Получает предложения пользователя
         /// </summary>
         /// <returns></returns>
-        [HttpGet("getOffers")]
+        [HttpGet("offers")]
         public async Task<List<Offer>> GetOffersAsync()
         {
             return await _dealService.GetOffersAsync(_userId);
+        }
+
+        /// <summary>
+        /// Получает предложения пользователя
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("offers/{currencyOneId}/{currencyTwoId}")]
+        public async Task<BidAskResourceModel> GetOffersAsync(string currencyOneId, string currencyTwoId)
+        {
+            return await _dealService.GetOffersAsync(currencyOneId, currencyTwoId);
         }
 
         #endregion

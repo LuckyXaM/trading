@@ -58,7 +58,7 @@ namespace DealsTests
 
             unitOfWork.Setup(s => s.SaveChangesAsync())
                 .Returns(() => SaveChangesAsync());
-            currencyClient.Setup(s => s.CheckCurrencyPair(It.IsAny<string>(), It.IsAny<string>()))
+            currencyClient.Setup(s => s.CheckCurrencyPairAsync(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns((string currencyFromId, string currencyToId) => CheckCurrencyPair(currencyFromId, currencyToId));
             transactionClient.Setup(s => s.ReserveAsync(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<decimal>()))
                 .Returns((Guid userId, string currencyId, decimal volume) => ReserveAsync(userId, currencyId, volume));

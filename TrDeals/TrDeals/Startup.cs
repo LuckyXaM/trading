@@ -14,6 +14,7 @@ using TrDeals.Data.Infrastructure.Interfaces;
 using TrDeals.Data.Infrastructure.Logic;
 using TrDeals.Data.Repositories.Interfaces;
 using TrDeals.Data.Repositories.Logic;
+using TrDeals.Service.Mapping.Configurations;
 using TrDeals.Service.Services.Interfaces;
 using TrDeals.Service.Services.Logic;
 using TrTransactionClient.Interfaces;
@@ -69,6 +70,13 @@ namespace TrDeals
                 c.IncludeXmlComments(xmlPath);
                 c.IgnoreObsoleteProperties();
             });
+
+            // Добавление автомаппера
+            var config = new AutoMapper.MapperConfiguration(c =>
+            {
+                AutoMapperConfiguration.Configure();
+            });
+            var mapper = config.CreateMapper();
 
             return services.BuildServiceProvider();
         }

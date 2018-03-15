@@ -33,17 +33,23 @@ namespace TrDeals.Data.Repositories.Interfaces
         /// <summary>
         /// Получает предложение
         /// </summary>
-        Offer Get(Guid userId, string currencyPairFromId, string currencyPairToId, decimal price);
+        Offer Get(Guid userId, string currencyFromId, string currencyToId, decimal price);
 
         /// <summary>
         /// Получает предложения
         /// </summary>
-        Task<List<Offer>> GetList(string currencyPairFromId, string currencyPairToId, decimal price);
+        Task<List<Offer>> GetList(string currencyFromId, string currencyToId, decimal price);
 
         /// <summary>
         /// Получает предложения пользователя
         /// </summary>
         /// <returns></returns>
         Task<List<Offer>> GetList(Guid userId);
+
+        /// <summary>
+        /// Получает предложения для валютной пары
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Offer>> GetList(string currencyOneId, string currenctTwoId);
     }
 }

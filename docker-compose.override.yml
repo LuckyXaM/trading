@@ -31,3 +31,10 @@ services:
     ports:
       - "8003:80"
 
+
+  tr-webapptest:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8001:80"
+

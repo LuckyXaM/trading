@@ -27,3 +27,10 @@ services:
       dockerfile: TrCurrencies/TrCurrencies/Dockerfile
     depends_on:
       - postgresql.data
+
+  tr-webapptest:
+    image: tr-webapptest
+    build:
+      context: .
+      dockerfile: TrWebAppTest/TrWebAppTest/Dockerfile
+

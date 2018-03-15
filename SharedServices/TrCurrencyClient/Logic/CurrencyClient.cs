@@ -3,7 +3,6 @@ using TrCurrencyClient.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace TrCurrencyClient.Logic
 {
@@ -47,7 +46,7 @@ namespace TrCurrencyClient.Logic
         /// </summary>
         /// <param name="currencyId">Ид валюты</param>
         /// <returns></returns>
-        public async Task<bool> CheckCurrency(string currencyId)
+        public async Task<bool> CheckCurrencyAsync(string currencyId)
         {
             var uri = $"{_serviceBaseUrl}/api/currency/checkCurrency/{currencyId}";
 
@@ -64,7 +63,7 @@ namespace TrCurrencyClient.Logic
         /// <param name="currencyFromId">Ид валюты продажи</param>
         /// <param name="currencyToId">Ид валюты покупки</param>
         /// <returns></returns>
-        public async Task<bool> CheckCurrencyPair(string currencyFromId, string currencyToId)
+        public async Task<bool> CheckCurrencyPairAsync(string currencyFromId, string currencyToId)
         {
             var uri = $"{_serviceBaseUrl}/api/currency/checkCurrencyPair/{currencyFromId}/{currencyToId}";
 

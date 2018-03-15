@@ -13,7 +13,7 @@ namespace TrCurrencyClient.Interfaces
         /// </summary>
         /// <param name="currencyId">Ид валюты</param>
         /// <returns></returns>
-        Task<bool> CheckCurrency(string currencyId);
+        Task<bool> CheckCurrencyAsync(string currencyId);
 
         /// <summary>
         /// Проверяет наличие валютной пары
@@ -21,6 +21,6 @@ namespace TrCurrencyClient.Interfaces
         /// <param name="currencyFromId">Ид валюты продажи</param>
         /// <param name="currencyToId">Ид валюты покупки</param>
         /// <returns></returns>
-        Task<bool> CheckCurrencyPair(string currencyFromId, string currencyToId);
+        Task<bool> CheckCurrencyPairAsync(string currencyFromId, string currencyToId);
     }
 }

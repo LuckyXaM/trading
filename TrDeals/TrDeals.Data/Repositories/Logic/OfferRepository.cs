@@ -72,20 +72,20 @@ namespace TrDeals.Data.Repositories.Logic
         /// <summary>
         /// Получает предложения
         /// </summary>
-        public async Task<List<Offer>> GetList(string currencyPairFromId, string currencyPairToId, decimal price)
+        public async Task<List<Offer>> GetList(string currencyFromId, string currencyToId, decimal price)
         {
             return await _context.Offers.AsNoTracking()
-                .Where(o => o.CurrencyFromId == currencyPairFromId && o.CurrencyToId == currencyPairToId && o.Price <= price)
+                .Where(o => o.CurrencyFromId == currencyFromId && o.CurrencyToId == currencyToId && o.Price <= price)
                 .ToListAsync();
         }
 
         /// <summary>
         /// Получает предложение
         /// </summary>
-        public Offer Get(Guid userId, string currencyPairFromId, string currencyPairToId, decimal price)
+        public Offer Get(Guid userId, string currencyFromId, string currencyToId, decimal price)
         {
             return _context.Offers.AsNoTracking()
-                .FirstOrDefault(o => o.UserId == userId && o.CurrencyFromId == currencyPairFromId && o.CurrencyToId == currencyPairToId && o.Price == price);
+                .FirstOrDefault(o => o.UserId == userId && o.CurrencyFromId == currencyFromId && o.CurrencyToId == currencyToId && o.Price == price);
         }
 
         /// <summary>
@@ -96,6 +96,18 @@ namespace TrDeals.Data.Repositories.Logic
         {
             return await _context.Offers.AsNoTracking()
                 .Where(o => o.UserId == userId)
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// Получает предложения для валютной пары
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Offer>> GetList(string currencyOneId, string currenctTwoId)
+        {
+            return await _context.Offers.AsNoTracking()
+                .Where(o => (o.CurrencyFromId == currencyOneId && o.CurrencyToId == currenctTwoId) 
+                    || (o.CurrencyFromId == currenctTwoId && o.CurrencyToId == currencyOneId))
                 .ToListAsync();
         }
 
