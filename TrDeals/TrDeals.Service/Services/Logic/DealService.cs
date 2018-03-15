@@ -80,7 +80,7 @@ namespace TrDeals.Service.Services.Logic
             try
             {
                 var sameOffers = (await _offerRepository.GetList(userId))
-                    .Where(o => o.Price == price && o.CurrencyFromId == currencyFromId && o.CurrencyToId == currencyToId);
+                    .Where(o => o.Price == price && o.CurrencyFromId == currencyFromId.ToUpper() && o.CurrencyToId == currencyToId.ToUpper());
 
                 var offer = new Offer
                 {
@@ -98,7 +98,7 @@ namespace TrDeals.Service.Services.Logic
 
                 await _unitOfWork.SaveChangesAsync();
 
-                var offers = (await _offerRepository.GetList(currencyToId, currencyFromId, MathOperations.RoudDivision(1, price)));
+                var offers = (await _offerRepository.GetList(currencyToId.ToUpper(), currencyFromId.ToUpper(), MathOperations.RoudDivision(1, price)));
 
                 await Matching(offer.Volume, price, userId, offers, currencyFromId, currencyToId);
 
@@ -147,16 +147,18 @@ namespace TrDeals.Service.Services.Logic
         /// Получает предложения пользователя для валютной пары
         /// </summary>
         /// <returns></returns>
-        public async Task<BidAskUserResourceModel> GetOffersAsync(Guid userId, string currencyFromId, string currencyToId)
+        public async Task<BidAskResourceModel> GetOffersAsync(Guid userId, string currencyFromId, string currencyToId)
         {
             var offers = await _offerRepository.GetList(userId, currencyFromId.ToUpper(), currencyToId.ToUpper());
-            var result = new BidAskUserResourceModel();
-            result.Asks = Mapper.Map<List<Offer>, List<OfferUserRecourceModel>>(offers.Where(o => o.CurrencyFromId == currencyFromId.ToUpper())
+            var result = new BidAskResourceModel();
+            var asks = offers.Where(o => o.CurrencyFromId == currencyFromId.ToUpper())
                 .OrderByDescending(o => o.Price)
-                .ToList());
-            result.Bids = Mapper.Map<List<Offer>, List<OfferUserRecourceModel>>(offers.Where(o => o.CurrencyFromId == currencyToId.ToUpper())
+                .ToList();
+            var bids = offers.Where(o => o.CurrencyFromId == currencyToId.ToUpper())
                 .OrderBy(o => o.Price)
-                .ToList());
+                .ToList();
+            result.Asks = Mapper.Map<List<Offer>, List<OfferRecourceModel>>(asks);
+            result.Bids = Mapper.Map<List<Offer>, List<OfferRecourceModel>>(bids);
 
             return result;
         }

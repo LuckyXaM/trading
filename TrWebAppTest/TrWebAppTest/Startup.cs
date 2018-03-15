@@ -12,13 +12,15 @@ namespace TrWebAppTest
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IWebAppTestService, WebAppTestService>();
-            services.AddSingleton<IDealClient, DealClient>();
+            services.AddScoped<IWebAppTestService, WebAppTestService>();
+            services.AddScoped<IDealClient, DealClient>();
+
+            services.AddMvc();
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            
+            app.UseMvc();
         }
     }
 }

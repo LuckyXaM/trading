@@ -39,12 +39,11 @@ namespace TrWebAppTest.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("trading/{currencyFromId}/{currencyToId}")]
-        public async Task<IActionResult> TradingAsync(string currencyFromId, string currencyToId)
+        public async Task<IActionResult> Trading(string currencyFromId, string currencyToId)
         {
-            //var result = await _webAppTestService;
+            var result = await _webAppTestService.GetTradingInfoAsync(currencyFromId, currencyToId);
 
-            //return View(result);
-            return null;
+            return View(result);
         }
 
 

@@ -35,6 +35,7 @@ services:
   tr-webapptest:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - DealUrl=http://tr-deals
     ports:
       - "8001:80"
 

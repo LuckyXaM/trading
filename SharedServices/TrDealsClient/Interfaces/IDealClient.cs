@@ -13,13 +13,13 @@ namespace TrDealsClient.Interfaces
         /// Получает предложения пользователя для валютной пары
         /// </summary>
         /// <returns></returns>
-        Task<OfferUserRecourceModel> GetUserOffersAsync(string currencyOneId, string currencyTwoId);
+        Task<BidAskResourceModel> GetUserOffersAsync(string currencyOneId, string currencyTwoId);
 
         /// <summary>
         /// Получает предложения для валютной пары
         /// </summary>
         /// <returns></returns>
-        Task<OfferRecourceModel> GetOffersAsync(string currencyOneId, string currencyTwoId);
+        Task<BidAskResourceModel> GetOffersAsync(string currencyOneId, string currencyTwoId);
 
         /// <summary>
         /// Удаляет предложение

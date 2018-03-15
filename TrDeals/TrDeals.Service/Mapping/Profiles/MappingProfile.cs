@@ -17,7 +17,6 @@ namespace TrDeals.Service.Mapping.Profiles
         public MappingProfile()
         {
             CreateMap<OfferRecourceModel, Offer>();
-            CreateMap<OfferUserRecourceModel, Offer>();
         }
 
         #endregion Конструкторы

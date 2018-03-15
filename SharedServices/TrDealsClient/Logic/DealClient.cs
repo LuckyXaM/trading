@@ -47,30 +47,30 @@ namespace TrDealsClient.Logic
         /// Получает предложения пользователя для валютной пары
         /// </summary>
         /// <returns></returns>
-        public async Task<OfferUserRecourceModel> GetUserOffersAsync(string currencyOneId, string currencyTwoId)
+        public async Task<BidAskResourceModel> GetUserOffersAsync(string currencyOneId, string currencyTwoId)
         {
             var uri = $"{_serviceBaseUrl}/api/deal/offers/user/{currencyOneId}/{currencyTwoId}";
 
-            using (_client)
-            {
-                var response = await _client.GetAsync(uri);
-                return JsonConvert.DeserializeObject<OfferUserRecourceModel>(await response.Content.ReadAsStringAsync());
-            }
+            var response = await _client.GetAsync(uri);
+            var result = JsonConvert.DeserializeObject<BidAskResourceModel>(await response.Content.ReadAsStringAsync());
+
+            return result;
+
         }
 
         /// <summary>
         /// Получает предложения для валютной пары
         /// </summary>
         /// <returns></returns>
-        public async Task<OfferRecourceModel> GetOffersAsync(string currencyOneId, string currencyTwoId)
+        public async Task<BidAskResourceModel> GetOffersAsync(string currencyOneId, string currencyTwoId)
         {
             var uri = $"{_serviceBaseUrl}/api/deal/offers/{currencyOneId}/{currencyTwoId}";
 
-            using (_client)
-            {
-                var response = await _client.GetAsync(uri);
-                return JsonConvert.DeserializeObject<OfferRecourceModel>(await response.Content.ReadAsStringAsync());
-            }
+            var response = await _client.GetAsync(uri);
+            var result = JsonConvert.DeserializeObject<BidAskResourceModel>(await response.Content.ReadAsStringAsync());
+
+            return result;
+
         }
 
         /// <summary>
@@ -81,11 +81,9 @@ namespace TrDealsClient.Logic
         {
             var uri = $"{_serviceBaseUrl}/api/deal/offer/{offerId}";
 
-            using (_client)
-            {
-                var response = await _client.DeleteAsync(uri);
-                return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
-            }
+            var response = await _client.DeleteAsync(uri);
+            return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+
         }
 
         /// <summary>
@@ -96,11 +94,9 @@ namespace TrDealsClient.Logic
         {
             var uri = $"{_serviceBaseUrl}/api/deal/offer/{currencyFromId}/{currencyToId}/{volume}/{price}";
 
-            using (_client)
-            {
-                var response = await _client.PutAsync(uri, new StringContent(""));
-                return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
-            }
+            var response = await _client.PutAsync(uri, new StringContent(""));
+            return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+
         }
 
         #endregion

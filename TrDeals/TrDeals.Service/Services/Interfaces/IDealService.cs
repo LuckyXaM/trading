@@ -27,7 +27,7 @@ namespace TrDeals.Service.Services.Interfaces
         /// Получает предложения пользователя для валютной пары
         /// </summary>
         /// <returns></returns>
-        Task<BidAskUserResourceModel> GetOffersAsync(Guid userId, string currencyOneId, string currencyTwoId);
+        Task<BidAskResourceModel> GetOffersAsync(Guid userId, string currencyOneId, string currencyTwoId);
 
         /// <summary>
         /// Получает предложения для валютной пары

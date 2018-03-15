@@ -56,13 +56,10 @@ namespace TrTransactionClient.Logic
         {
             var uri = $"{_serviceBaseUrl}/api/transaction/unReserve/{userId}/{currencyId}/{volume}";
 
-            using (_client)
-            {
-                var response = await _client.PostAsync(uri, new StringContent(""));
-                var result = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _client.PostAsync(uri, new StringContent(""));
+            var result = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
-                return result;
-            }
+            return result;
         }
 
         /// <summary>
@@ -76,13 +73,10 @@ namespace TrTransactionClient.Logic
         {
             var uri = $"{_serviceBaseUrl}/api/transaction/reserve/{userId}/{currencyId}/{volume}";
 
-            using (_client)
-            {
-                var response = await _client.PostAsync(uri, new StringContent(""));
-                var result = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            var response = await _client.PostAsync(uri, new StringContent(""));
+            var result = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
-                return result;
-            }
+            return result;
         }
 
         /// <summary>
@@ -95,11 +89,8 @@ namespace TrTransactionClient.Logic
             var uri = $"{_serviceBaseUrl}/api/transaction/buy";
             var content = new StringContent(JsonConvert.SerializeObject(operationData), Encoding.UTF8, "application/json");
 
-            using (_client)
-            {
-                var response = await _client.PostAsync(uri, content);
-                return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
-            }
+            var response = await _client.PostAsync(uri, content);
+            return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
         }
 
         #endregion

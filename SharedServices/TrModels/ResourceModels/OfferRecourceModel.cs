@@ -1,10 +1,17 @@
-﻿namespace TrModels.ResourceModels
+﻿using System;
+
+namespace TrModels.ResourceModels
 {
     /// <summary>
     /// Модель предложения
     /// </summary>
     public class OfferRecourceModel
     {
+        /// <summary>
+        /// Ид предложения
+        /// </summary>
+        public Guid OfferId { get; set; }
+
         /// <summary>
         /// Валюта покупки
         /// </summary>

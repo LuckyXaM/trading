@@ -1,5 +1,7 @@
-﻿using TrDealsClient.Interfaces;
+﻿using System.Threading.Tasks;
+using TrDealsClient.Interfaces;
 using TrWebAppTest.Services.Services.Interfaces;
+using TrWebAppTest.Services.Services.Models;
 
 namespace TrWebAppTest.Services.Services.Logic
 {
@@ -32,6 +34,22 @@ namespace TrWebAppTest.Services.Services.Logic
         #endregion
 
         #region Методы
+
+        /// <summary>
+        /// Получает информацию о сделках в рамках валютной пары
+        /// </summary>
+        /// <returns></returns>
+        public async Task<TradingInfo> GetTradingInfoAsync(string currencyFromId, string currencyToId)
+        {
+            var bidAskResourceModel = await _dealClient.GetOffersAsync(currencyFromId, currencyToId);
+            var bidAskUserResourceModel = await _dealClient.GetUserOffersAsync(currencyFromId, currencyToId);
+
+            return new TradingInfo
+            {
+                BidAskResourceModel = bidAskResourceModel,
+                BidAskUserResourceModel = bidAskUserResourceModel
+            };
+        }
 
         #endregion
     }

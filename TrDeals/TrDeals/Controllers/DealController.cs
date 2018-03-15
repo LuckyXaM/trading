@@ -77,7 +77,7 @@ namespace TrDeals.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("offers/user/{currencyOneId}/{currencyTwoId}")]
-        public async Task<BidAskUserResourceModel> GetUserOffersAsync(string currencyOneId, string currencyTwoId)
+        public async Task<BidAskResourceModel> GetUserOffersAsync(string currencyOneId, string currencyTwoId)
         {
             return await _dealService.GetOffersAsync(_userId, currencyOneId, currencyTwoId);
         }
