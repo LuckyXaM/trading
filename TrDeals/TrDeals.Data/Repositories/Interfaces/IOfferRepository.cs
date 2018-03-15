@@ -47,6 +47,12 @@ namespace TrDeals.Data.Repositories.Interfaces
         Task<List<Offer>> GetList(Guid userId);
 
         /// <summary>
+        /// Получает предложения пользователя для валютной пары
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Offer>> GetList(Guid userId, string currencyOneId, string currenctTwoId);
+
+        /// <summary>
         /// Получает предложения для валютной пары
         /// </summary>
         /// <returns></returns>

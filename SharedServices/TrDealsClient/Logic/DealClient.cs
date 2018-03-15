@@ -44,6 +44,21 @@ namespace TrDealsClient.Logic
         #region Методы
 
         /// <summary>
+        /// Получает предложения пользователя для валютной пары
+        /// </summary>
+        /// <returns></returns>
+        public async Task<OfferUserRecourceModel> GetUserOffersAsync(string currencyOneId, string currencyTwoId)
+        {
+            var uri = $"{_serviceBaseUrl}/api/deal/offers/user/{currencyOneId}/{currencyTwoId}";
+
+            using (_client)
+            {
+                var response = await _client.GetAsync(uri);
+                return JsonConvert.DeserializeObject<OfferUserRecourceModel>(await response.Content.ReadAsStringAsync());
+            }
+        }
+
+        /// <summary>
         /// Получает предложения для валютной пары
         /// </summary>
         /// <returns></returns>

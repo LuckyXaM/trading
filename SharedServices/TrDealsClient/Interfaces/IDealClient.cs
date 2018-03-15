@@ -10,6 +10,12 @@ namespace TrDealsClient.Interfaces
     public interface IDealClient
     {
         /// <summary>
+        /// Получает предложения пользователя для валютной пары
+        /// </summary>
+        /// <returns></returns>
+        Task<OfferUserRecourceModel> GetUserOffersAsync(string currencyOneId, string currencyTwoId);
+
+        /// <summary>
         /// Получает предложения для валютной пары
         /// </summary>
         /// <returns></returns>

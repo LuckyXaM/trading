@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System;
 using TrDeals.Data.Models;
 using TrModels.ResourceModels;
 
@@ -18,6 +17,7 @@ namespace TrDeals.Service.Mapping.Profiles
         public MappingProfile()
         {
             CreateMap<OfferRecourceModel, Offer>();
+            CreateMap<OfferUserRecourceModel, Offer>();
         }
 
         #endregion Конструкторы

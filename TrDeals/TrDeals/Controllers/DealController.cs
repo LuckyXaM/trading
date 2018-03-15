@@ -73,13 +73,13 @@ namespace TrDeals.Controllers
         }
 
         /// <summary>
-        /// Получает предложения пользователя
+        /// Получает предложения пользователя по валютной паре
         /// </summary>
         /// <returns></returns>
-        [HttpGet("offers")]
-        public async Task<List<Offer>> GetOffersAsync()
+        [HttpGet("offers/user/{currencyOneId}/{currencyTwoId}")]
+        public async Task<BidAskUserResourceModel> GetUserOffersAsync(string currencyOneId, string currencyTwoId)
         {
-            return await _dealService.GetOffersAsync(_userId);
+            return await _dealService.GetOffersAsync(_userId, currencyOneId, currencyTwoId);
         }
 
         /// <summary>

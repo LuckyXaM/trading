@@ -24,15 +24,15 @@ namespace TrDeals.Service.Services.Interfaces
         Task<bool> RemoveOfferAsync(Guid askId, Guid userId);
 
         /// <summary>
-        /// Получает предложения пользователя
+        /// Получает предложения пользователя для валютной пары
         /// </summary>
         /// <returns></returns>
-        Task<List<Offer>> GetOffersAsync(Guid userId);
+        Task<BidAskUserResourceModel> GetOffersAsync(Guid userId, string currencyOneId, string currencyTwoId);
 
         /// <summary>
         /// Получает предложения для валютной пары
         /// </summary>
         /// <returns></returns>
-        Task<BidAskResourceModel> GetOffersAsync(string correncyOne, string currencyTwo);
+        Task<BidAskResourceModel> GetOffersAsync(string currencyOneId, string currencyTwoId);
     }
 }

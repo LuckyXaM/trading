@@ -1,4 +1,5 @@
-﻿using TrWebAppTest.Services.Services.Interfaces;
+﻿using TrDealsClient.Interfaces;
+using TrWebAppTest.Services.Services.Interfaces;
 
 namespace TrWebAppTest.Services.Services.Logic
 {
@@ -9,6 +10,11 @@ namespace TrWebAppTest.Services.Services.Logic
     {
         #region Поля, свойства
 
+        /// <summary>
+        /// Клиент сделок
+        /// </summary>
+        private readonly IDealClient _dealClient;
+
         #endregion
 
         #region Конструктор
@@ -17,10 +23,10 @@ namespace TrWebAppTest.Services.Services.Logic
         /// Сервис веб приложения
         /// </summary>
         public WebAppTestService(
-
+            IDealClient dealClient
             )
         {
-
+            _dealClient = dealClient;
         }
 
         #endregion

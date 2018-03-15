@@ -100,15 +100,31 @@ namespace TrDeals.Data.Repositories.Logic
         }
 
         /// <summary>
+        /// Получает предложения пользователя для валютной пары
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Offer>> GetList(Guid userId, string currencyOneId, string currenctTwoId)
+        {
+            var result =  await _context.Offers.AsNoTracking()
+                .Where(o => o.UserId == userId && (o.CurrencyFromId == currencyOneId && o.CurrencyToId == currenctTwoId)
+                    || (o.CurrencyFromId == currenctTwoId && o.CurrencyToId == currencyOneId))
+                .ToListAsync();
+
+            return result;
+        }
+
+        /// <summary>
         /// Получает предложения для валютной пары
         /// </summary>
         /// <returns></returns>
         public async Task<List<Offer>> GetList(string currencyOneId, string currenctTwoId)
         {
-            return await _context.Offers.AsNoTracking()
-                .Where(o => (o.CurrencyFromId == currencyOneId && o.CurrencyToId == currenctTwoId) 
+            var result = await _context.Offers.AsNoTracking()
+                .Where(o => (o.CurrencyFromId == currencyOneId && o.CurrencyToId == currenctTwoId)
                     || (o.CurrencyFromId == currenctTwoId && o.CurrencyToId == currencyOneId))
                 .ToListAsync();
+
+            return result;
         }
 
         #endregion

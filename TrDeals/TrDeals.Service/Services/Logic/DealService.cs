@@ -144,18 +144,25 @@ namespace TrDeals.Service.Services.Logic
         }
 
         /// <summary>
-        /// Получает предложения пользователя
+        /// Получает предложения пользователя для валютной пары
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Offer>> GetOffersAsync(Guid userId)
+        public async Task<BidAskUserResourceModel> GetOffersAsync(Guid userId, string currencyFromId, string currencyToId)
         {
-            var result = await _offerRepository.GetList(userId);
+            var offers = await _offerRepository.GetList(userId, currencyFromId.ToUpper(), currencyToId.ToUpper());
+            var result = new BidAskUserResourceModel();
+            result.Asks = Mapper.Map<List<Offer>, List<OfferUserRecourceModel>>(offers.Where(o => o.CurrencyFromId == currencyFromId.ToUpper())
+                .OrderByDescending(o => o.Price)
+                .ToList());
+            result.Bids = Mapper.Map<List<Offer>, List<OfferUserRecourceModel>>(offers.Where(o => o.CurrencyFromId == currencyToId.ToUpper())
+                .OrderBy(o => o.Price)
+                .ToList());
 
             return result;
         }
 
         /// <summary>
-        /// Получает предложения пользователя
+        /// Получает предложения для валютной пары
         /// </summary>
         /// <returns></returns>
         public async Task<BidAskResourceModel> GetOffersAsync(string currencyFromId, string currencyToId)
