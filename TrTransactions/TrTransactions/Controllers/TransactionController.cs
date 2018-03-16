@@ -96,7 +96,7 @@ namespace TrTransactions.Controllers
         /// <param name="currencyId">Валюта</param>
         /// <param name="volume">Сумма</param>
         /// <returns></returns>
-        [HttpPost("unReserve/{userId}/{currencyId}/{volume}")]
+        [HttpDelete("unReserve/{userId}/{currencyId}/{volume}")]
         public async Task<bool> RemoveReserveAsync(Guid userId, string currencyId, decimal volume)
         {
             return await _transactionService.RemoveReserveAsync(userId, currencyId, volume);

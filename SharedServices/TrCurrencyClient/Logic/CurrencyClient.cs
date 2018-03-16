@@ -3,6 +3,7 @@ using TrCurrencyClient.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System;
 
 namespace TrCurrencyClient.Logic
 {
@@ -16,12 +17,7 @@ namespace TrCurrencyClient.Logic
         /// <summary>
         /// Http client
         /// </summary>
-        private HttpClient _client { get; } = new HttpClient();
-
-        /// <summary>
-        /// Адрес сервиса
-        /// </summary>
-        private readonly string _serviceBaseUrl;
+        private static HttpClient _client { get; } = new HttpClient();
 
         #endregion
 
@@ -34,7 +30,7 @@ namespace TrCurrencyClient.Logic
             IConfiguration configuration
             )
         {
-            _serviceBaseUrl = configuration.GetValue<string>("CurrencyUrl");
+            _client.BaseAddress = new Uri(configuration.GetValue<string>("CurrencyUrl"));
         }
 
         #endregion
@@ -48,13 +44,10 @@ namespace TrCurrencyClient.Logic
         /// <returns></returns>
         public async Task<bool> CheckCurrencyAsync(string currencyId)
         {
-            var uri = $"{_serviceBaseUrl}/api/currency/checkCurrency/{currencyId}";
+            var uri = $"api/currency/checkCurrency/{currencyId}";
 
-            using (_client)
-            {
-                var response = await _client.GetAsync(uri);
-                return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
-            }
+            var response = await _client.GetAsync(uri);
+            return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
         }
 
         /// <summary>
@@ -65,13 +58,10 @@ namespace TrCurrencyClient.Logic
         /// <returns></returns>
         public async Task<bool> CheckCurrencyPairAsync(string currencyFromId, string currencyToId)
         {
-            var uri = $"{_serviceBaseUrl}/api/currency/checkCurrencyPair/{currencyFromId}/{currencyToId}";
+            var uri = $"api/currency/checkCurrencyPair/{currencyFromId}/{currencyToId}";
 
-            using (_client)
-            {
-                var response = await _client.GetAsync(uri);
-                return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
-            }
+            var response = await _client.GetAsync(uri);
+            return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
         }
 
         #endregion

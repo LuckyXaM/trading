@@ -13,7 +13,7 @@ namespace TrWebAppTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IWebAppTestService, WebAppTestService>();
-            services.AddScoped<IDealClient, DealClient>();
+            services.AddSingleton<IDealClient, DealClient>();
 
             services.AddMvc();
         }

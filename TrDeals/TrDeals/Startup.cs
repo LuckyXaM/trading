@@ -54,8 +54,8 @@ namespace TrDeals
             services.AddScoped<IOfferRepository, OfferRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddScoped<ICurrencyClient, CurrencyClient>();
-            services.AddScoped<ITransactionClient, TransactionClient>();
+            services.AddSingleton<ICurrencyClient, CurrencyClient>();
+            services.AddSingleton<ITransactionClient, TransactionClient>();
             services.AddScoped<IDealService, DealService>();
 
             // Добавление документации

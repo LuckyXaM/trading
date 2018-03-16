@@ -20,12 +20,7 @@ namespace TrTransactionClient.Logic
         /// <summary>
         /// Http client
         /// </summary>
-        private HttpClient _client { get; } = new HttpClient();
-
-        /// <summary>
-        /// Адрес сервиса
-        /// </summary>
-        private readonly string _serviceBaseUrl;
+        private static HttpClient _client { get; } = new HttpClient();
 
         #endregion
 
@@ -38,7 +33,7 @@ namespace TrTransactionClient.Logic
             IConfiguration configuration
             )
         {
-            _serviceBaseUrl = configuration.GetValue<string>("TransactionUrl");
+            _client.BaseAddress = new Uri(configuration.GetValue<string>("TransactionUrl"));
         }
 
         #endregion
@@ -54,9 +49,9 @@ namespace TrTransactionClient.Logic
         /// <returns></returns>
         public async Task<bool> RemoveReserveAsync(Guid userId, string currencyId, decimal volume)
         {
-            var uri = $"{_serviceBaseUrl}/api/transaction/unReserve/{userId}/{currencyId}/{volume}";
+            var uri = $"api/transaction/unReserve/{userId}/{currencyId}/{volume}";
 
-            var response = await _client.PostAsync(uri, new StringContent(""));
+            var response = await _client.DeleteAsync(uri);
             var result = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
 
             return result;
@@ -71,7 +66,7 @@ namespace TrTransactionClient.Logic
         /// <returns></returns>
         public async Task<bool> ReserveAsync(Guid userId, string currencyId, decimal volume)
         {
-            var uri = $"{_serviceBaseUrl}/api/transaction/reserve/{userId}/{currencyId}/{volume}";
+            var uri = $"api/transaction/reserve/{userId}/{currencyId}/{volume}";
 
             var response = await _client.PostAsync(uri, new StringContent(""));
             var result = JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
@@ -86,7 +81,7 @@ namespace TrTransactionClient.Logic
         /// <returns></returns>
         public async Task<bool> BuyAsync(List<OperationData> operationData)
         {
-            var uri = $"{_serviceBaseUrl}/api/transaction/buy";
+            var uri = $"api/transaction/buy";
             var content = new StringContent(JsonConvert.SerializeObject(operationData), Encoding.UTF8, "application/json");
 
             var response = await _client.PostAsync(uri, content);

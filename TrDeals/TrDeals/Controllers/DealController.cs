@@ -66,7 +66,7 @@ namespace TrDeals.Controllers
         /// <param name="volume"> Сумма</param>
         /// <param name="price">Курс</param>
         /// <returns></returns>
-        [HttpPut("offer/{currencyFromId}/{currencyToId}/{volume}/{price}")]
+        [HttpPost("offer/{currencyFromId}/{currencyToId}/{volume}/{price}")]
         public async Task<bool> AddOfferAsync(string currencyFromId, string currencyToId, decimal volume, decimal price)
         {
             return await _dealService.AddOfferAsync(_userId, currencyFromId, currencyToId, volume, price);
