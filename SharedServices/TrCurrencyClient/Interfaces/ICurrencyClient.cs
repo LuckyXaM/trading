@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using TrModels.Currency;
 
 namespace TrCurrencyClient.Interfaces
 {
@@ -22,5 +23,11 @@ namespace TrCurrencyClient.Interfaces
         /// <param name="currencyToId">Ид валюты покупки</param>
         /// <returns></returns>
         Task<bool> CheckCurrencyPairAsync(string currencyFromId, string currencyToId);
+
+        /// <summary>
+        /// Получает все валюты
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Currency>> GetCurrenciesAsync();
     }
 }

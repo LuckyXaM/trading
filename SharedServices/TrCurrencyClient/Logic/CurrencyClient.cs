@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using TrModels.Currency;
 
 namespace TrCurrencyClient.Logic
 {
@@ -62,6 +64,18 @@ namespace TrCurrencyClient.Logic
 
             var response = await _client.GetAsync(uri);
             return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+        }
+
+        /// <summary>
+        /// Получает все валюты
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Currency>> GetCurrenciesAsync()
+        {
+            var uri = $"api/currency/currencies";
+
+            var response = await _client.GetAsync(uri);
+            return JsonConvert.DeserializeObject<List<Currency>>(await response.Content.ReadAsStringAsync());
         }
 
         #endregion

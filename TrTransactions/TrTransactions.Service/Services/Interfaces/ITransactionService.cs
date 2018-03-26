@@ -16,6 +16,11 @@ namespace TrTransactions.Service.Services.Interfaces
         Task<decimal> GetBalanceAsync(Guid userId, string currencyTypeId);
 
         /// <summary>
+        /// Получает баланс пользователя по всем валютам
+        /// </summary>
+        Task<List<UserBalance>> GetBalanceAsync(Guid userId);
+
+        /// <summary>
         /// Пополняет баланс пользователя
         /// </summary>
         Task<bool> ReplenishmentAsync(Guid userId, string currencyTypeId, decimal ammount);

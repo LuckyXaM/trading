@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedServices\TrCurrencyClient\TrCurrencyClient.csproj" />
     <ProjectReference Include="..\..\SharedServices\TrDealsClient\TrDealsClient.csproj" />
+    <ProjectReference Include="..\..\SharedServices\TrTransactionClient\TrTransactionClient.csproj" />
   </ItemGroup>
 
 </Project>

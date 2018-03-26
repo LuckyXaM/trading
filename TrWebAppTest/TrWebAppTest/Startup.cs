@@ -5,6 +5,10 @@ using TrWebAppTest.Services.Services.Interfaces;
 using TrWebAppTest.Services.Services.Logic;
 using TrDealsClient.Interfaces;
 using TrDealsClient.Logic;
+using TrTransactionClient.Interfaces;
+using TrTransactionClient.Logic;
+using TrCurrencyClient.Logic;
+using TrCurrencyClient.Interfaces;
 
 namespace TrWebAppTest
 {
@@ -14,6 +18,8 @@ namespace TrWebAppTest
         {
             services.AddScoped<IWebAppTestService, WebAppTestService>();
             services.AddSingleton<IDealClient, DealClient>();
+            services.AddSingleton<ITransactionClient, TransactionClient>();
+            services.AddSingleton<ICurrencyClient, CurrencyClient>();
 
             services.AddMvc();
         }

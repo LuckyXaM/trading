@@ -5,6 +5,9 @@ using TrModels.Transaction;
 
 namespace TrTransactionClient.Interfaces
 {
+    /// <summary>
+    /// Клиент управлениями транзакций
+    /// </summary>
     public interface ITransactionClient
     {
         /// <summary>
@@ -31,5 +34,17 @@ namespace TrTransactionClient.Interfaces
         /// <param name="operationData">Данные операции</param>
         /// <returns></returns>
         Task<bool> BuyAsync(List<OperationData> operationData);
+
+        /// <summary>
+        /// Получает баланс пользователя
+        /// </summary>
+        /// <returns></returns>
+        Task<List<UserBalance>> BalanceAsync(Guid userId);
+
+        /// <summary>
+        /// Пополняет баланс пользователя
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> ReplenishmentAsync(Guid userId, string currencyId, decimal ammount);
     }
 }

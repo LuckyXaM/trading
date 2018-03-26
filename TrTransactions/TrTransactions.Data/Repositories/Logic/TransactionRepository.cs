@@ -57,7 +57,7 @@ namespace TrTransactions.Data.Repositories.Logic
         /// <returns></returns>
         public IQueryable<Transaction> GetList(Guid userId, string currencyId, TransactionType transactionType)
         {
-            return _context.Transactions.Where(t => t.UserId == userId && t.CurrencyId == currencyId.ToUpper() && t.TransactionType == transactionType);
+            return _context.Transactions.Where(t => t.UserId == userId && t.CurrencyId.ToUpper() == currencyId.ToUpper() && t.TransactionType == transactionType);
         }
 
         /// <summary>
@@ -66,7 +66,16 @@ namespace TrTransactions.Data.Repositories.Logic
         public IQueryable<Transaction> GetList(Guid userId, string currencyId)
         {
             return _context.Transactions.AsNoTracking()
-                .Where(t => t.UserId == userId && t.CurrencyId == currencyId.ToUpper());
+                .Where(t => t.UserId == userId && t.CurrencyId.ToUpper() == currencyId.ToUpper());
+        }
+
+        /// <summary>
+        /// Получает все транзакции пользователя
+        /// </summary>
+        public IQueryable<Transaction> GetList(Guid userId)
+        {
+            return _context.Transactions.AsNoTracking()
+                .Where(t => t.UserId == userId);
         }
 
         /// <summary>

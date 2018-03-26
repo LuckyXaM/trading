@@ -36,6 +36,17 @@ namespace TrDeals
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            // Настройки доступа к api
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("Corspolicy",
+                    builder => builder
+                                .AllowAnyOrigin()
+                                .AllowAnyMethod()
+                                .AllowAnyHeader()
+                                .AllowCredentials());
+            });
+
             // Подключение БД
             var dbConnectionString = _configuration["DbConnectionString"] ?? _configuration.GetConnectionString("DefaultConnection");
             services.AddEntityFrameworkNpgsql()
@@ -83,6 +94,9 @@ namespace TrDeals
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            // Настройки доступа к api
+            app.UseCors("Corspolicy");
+
             //Применение миграций
             var dbContext = app.ApplicationServices.GetService<TrDealsContext>();
             dbContext.Database.Migrate();

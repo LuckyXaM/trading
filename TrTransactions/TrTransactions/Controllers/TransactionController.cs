@@ -53,6 +53,17 @@ namespace TrTransactions.Controllers
         }
 
         /// <summary>
+        /// Получает баланс пользователя по всем валютам
+        /// </summary>
+        /// <param name="userId">Ид пользователя</param>
+        /// <returns></returns>
+        [HttpGet("balance/{userId}")]
+        public async Task<List<UserBalance>> GetBalanceAllAsync(Guid userId)
+        {
+            return await _transactionService.GetBalanceAsync(userId);
+        }
+
+        /// <summary>
         /// Пополняет баланс пользователя
         /// </summary>
         /// <param name="userId">Ид пользователя</param>

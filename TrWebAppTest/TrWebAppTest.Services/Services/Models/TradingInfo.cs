@@ -16,5 +16,20 @@ namespace TrWebAppTest.Services.Services.Models
         /// Биды и аски пользователя
         /// </summary>
         public BidAskResourceModel BidAskUserResourceModel { get; set; }
+
+        /// <summary>
+        /// Ид валюты покупки
+        /// </summary>
+        public string CurrencyToId { get; set; }
+
+        /// <summary>
+        /// Ид валюты продажи
+        /// </summary>
+        public string CurrencyFromId { get; set; }
+
+        /// <summary>
+        /// Uri tr-deals
+        /// </summary>
+        public string DealUri { get; set; }
     }
 }

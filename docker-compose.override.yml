@@ -36,6 +36,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DealUrl=http://tr-deals
+      - TransactionUrl=http://tr-transactions
+      - CurrencyUrl=http://tr-currencies
     ports:
       - "8001:80"
 

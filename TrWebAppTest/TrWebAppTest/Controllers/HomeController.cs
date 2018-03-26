@@ -46,6 +46,17 @@ namespace TrWebAppTest.Controllers
             return View(result);
         }
 
+        /// <summary>
+        /// Личный кабинет
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("trading/office")]
+        public async Task<IActionResult> Office()
+        {
+            var result = await _webAppTestService.GetOfficeInfoAsync();
+
+            return View(result);
+        }
 
         #endregion
     }

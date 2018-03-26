@@ -1,0 +1,51 @@
+﻿@using TrWebAppTest.Services.Services.Models
+@model UserBalanceViewModel
+
+@{
+    ViewData["Title"] = "Баланс";
+    Layout = "~/Views/Shared/layout.cshtml";
+}
+<h2>Балансы</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Price</th>
+            <th>Ammount</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.UserBalance)
+        {
+            <tr>
+                <td>@item.CurrencyPairId</td>
+                <td>@item.Balance</td>
+                <td>
+                    <input data-id="@item.CurrencyPairId" type="text" class="form-control" placeholder="Volume" />
+                </td>
+                <td>
+                    <button class="btn btn-success" data-id="@item.CurrencyPairId">Пополнить</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('button[class="btn btn-success"]').on('click', function (e) {
+            $('button').prop('disabled', true);
+            var dataId = $(this).attr('data-id');
+            var inputTag = 'input[data-id="' + dataId + '"]';
+            console.log('@Model.TradingUri' + "/api/transaction/replenishment/" + '@Model.UserId' + "/" + $(this).attr('data-id') + "/" + $(inputTag).val());
+            var ajax = $.ajax({
+                type: "POST",
+                url: '@Model.TradingUri' + "/api/transaction/replenishment/" + '@Model.UserId' + "/" + $(this).attr('data-id') + "/" + $(inputTag).val(),
+                success: function (result) {
+                    location.reload()
+                }
+            });
+        });
+    });
+</script>

@@ -88,6 +88,30 @@ namespace TrTransactionClient.Logic
             return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
         }
 
+        /// <summary>
+        /// Получает баланс пользователя
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<UserBalance>> BalanceAsync(Guid userId)
+        {
+            var uri = $"/api/transaction/balance/{userId}";
+
+            var response = await _client.GetAsync(uri);
+            return JsonConvert.DeserializeObject<List<UserBalance>>(await response.Content.ReadAsStringAsync());
+        }
+
+        /// <summary>
+        /// Пополняет баланс пользователя
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> ReplenishmentAsync(Guid userId, string currencyId, decimal ammount)
+        {
+            var uri = $"/api/transaction/replenishment/{userId}/{currencyId}/{ammount}";
+
+            var response = await _client.PostAsync(uri, new StringContent(""));
+            return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+        }
+
         #endregion
     }
 }

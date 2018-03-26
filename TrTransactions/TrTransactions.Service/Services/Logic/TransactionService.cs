@@ -57,6 +57,14 @@ namespace TrTransactions.Service.Services.Logic
         }
 
         /// <summary>
+        /// Получает баланс пользователя по всем валютам
+        /// </summary>
+        public async Task<List<UserBalance>> GetBalanceAsync(Guid userId)
+        {
+            return await GetUserBalanceAsync(userId);
+        }
+
+        /// <summary>
         /// Пополняет баланс пользователя
         /// </summary>
         public async Task<bool> ReplenishmentAsync(Guid userId, string currencyTypeId, decimal ammount)
@@ -220,6 +228,25 @@ namespace TrTransactions.Service.Services.Logic
         {
             var result = await _transactionRepository.GetList(userId, currencyId)
                 .SumAsync(s => s.Volume);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Получает баланс пользователя по всем валютам
+        /// </summary>
+        /// <returns></returns>
+        private async Task<List<UserBalance>> GetUserBalanceAsync(Guid userId)
+        {
+            var result = new List<UserBalance>();
+
+            var transactions = await _transactionRepository.GetList(userId)
+                .ToListAsync();
+
+            foreach (var item in transactions.GroupBy(t => t.CurrencyId.ToUpper()))
+            {
+                result.Add(new UserBalance { Balance = item.Sum(s => s.Volume), CurrencyPairId = item .FirstOrDefault().CurrencyId.ToUpper()});
+            }
 
             return result;
         }

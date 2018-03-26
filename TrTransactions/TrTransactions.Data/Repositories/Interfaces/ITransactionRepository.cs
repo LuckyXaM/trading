@@ -33,6 +33,12 @@ namespace TrTransactions.Data.Repositories.Interfaces
         IQueryable<Transaction> GetList(Guid userId, string currencyTypeId);
 
         /// <summary>
+        /// Получает все транзакции пользователя
+        /// </summary>
+        /// <returns></returns>
+        IQueryable<Transaction> GetList(Guid userId);
+
+        /// <summary>
         /// Удаляет транзакции
         /// </summary>
         void RemoveRange(List<Transaction> transactions);

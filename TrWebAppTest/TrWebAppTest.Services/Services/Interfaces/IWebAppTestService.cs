@@ -13,5 +13,11 @@ namespace TrWebAppTest.Services.Services.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<TradingInfo> GetTradingInfoAsync(string currencyFromId, string currencyToId);
+
+        /// <summary>
+        /// Получает инфо о балансе пользователя
+        /// </summary>
+        /// <returns></returns>
+        Task<UserBalanceViewModel> GetOfficeInfoAsync();
     }
 }

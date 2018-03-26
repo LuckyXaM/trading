@@ -1,8 +1,169 @@
-﻿
+﻿@using TrWebAppTest.Services.Services.Models
+@model TradingInfo
+
 @{
-    ViewData["Title"] = "trading";
+    ViewData["Title"] = Model.CurrencyFromId + " - " + Model.CurrencyToId;
     Layout = "~/Views/Shared/layout.cshtml";
 }
+<h2 align="center">@(Model.CurrencyFromId.ToUpper() + " - " + Model.CurrencyToId.ToUpper())</h2>
 
-<h2>trading</h2>
+<div class="row">
+    <div class="col-md-6">
+        <h3>Asks</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Price</th>
+                    <th>Ammount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.BidAskResourceModel.Asks.OrderBy(a => a.Price))
+                {
+                    <tr>
+                        <td>@item.Price</td>
+                        <td>@item.Volume</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h3>Bids</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Price</th>
+                    <th>Ammount</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.BidAskResourceModel.Bids.OrderByDescending(a => a.Price))
+                {
+                    <tr>
+                        <td>@item.Price</td>
+                        <td>@item.Volume</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
+<div class="row">
+    <div class="col-md-6">
+        <h3>User asks</h3>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="priceA" placeholder="Price" />
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="volumeA" placeholder="Volume" />
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success" id="createA">Create ask</button>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Price</th>
+                    <th>Volume</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.BidAskUserResourceModel.Asks.OrderBy(a => a.Price))
+                {
+                    <tr>
+                        <td>@item.Price</td>
+                        <td>@item.Volume</td>
+                        <td>@((decimal)item.Volume * item.Price)</td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-type="delete" data-id="@item.OfferId">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h3>User bids</h3>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="priceB" placeholder="Price" />
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="volumeB" placeholder="Volume" />
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-success" id="createB">Create bid</button>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Price</th>
+                    <th>Volume</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.BidAskUserResourceModel.Bids.OrderByDescending(a => a.Price))
+                {
+                    <tr>
+                        <td>@item.Price</td>
+                        <td>@item.Volume</td>
+                        <td>@((decimal)item.Volume * item.Price)</td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-type="delete" data-id="@item.OfferId">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('button[data-type="delete"]').on('click', function (e) {
+            $('button').prop('disabled', true);
+            var ajax = $.ajax({
+                type: "DELETE",
+                url: '@Model.DealUri' + "/api/deal/offer/" + $(this).attr('data-id') ,
+                success: function (result) {
+                    location.reload()
+                }
+            });
+        });
+
+        $('button[id="createA"]').on('click', function (e) {
+            $('button').prop('disabled', true);
+            console.log('@Model.DealUri' + "/api/deal/offer/" + '@Model.CurrencyFromId' + "/" + '@Model.CurrencyToId' + "/" + $('#volumeA').val() + "/" + $('#priceA').val());
+            var ajax = $.ajax({
+                type: "POST",
+                url: '@Model.DealUri' + "/api/deal/offer/" + '@Model.CurrencyFromId' + "/" + '@Model.CurrencyToId' + "/" + $('#volumeA').val() + "/" + $('#priceA').val(),
+                success: function (result) {
+                    location.reload()
+                }
+            });
+        });
+
+        $('button[id="createB"]').on('click', function (e) {
+            $('button').prop('disabled', true);
+            console.log('@Model.DealUri' + "/api/deal/offer/" + '@Model.CurrencyToId' + "/" + '@Model.CurrencyFromId' + "/" + $('#volumeB').val() + "/" + $('#priceB').val());
+            var ajax = $.ajax({
+                type: "POST",
+                url: '@Model.DealUri' + "/api/deal/offer/" + '@Model.CurrencyToId' + "/" + '@Model.CurrencyFromId' + "/" + $('#volumeB').val() + "/" + $('#priceB').val(),
+                success: function (result) {
+                    location.reload()
+                }
+            });
+        });
+    });
+</script>
