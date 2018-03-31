@@ -12,9 +12,10 @@ using TrDeals.Data.Models;
 namespace TrDeals.Migrations
 {
     [DbContext(typeof(TrDealsContext))]
-    partial class TrDealsContextModelSnapshot : ModelSnapshot
+    [Migration("20180331092930_OfferType")]
+    partial class OfferType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

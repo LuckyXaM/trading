@@ -48,5 +48,11 @@ namespace TrDeals.Data.Models
         /// </summary>
         [Required]
         public decimal Price { get; set; }
+
+        /// <summary>
+        /// Тип предложения
+        /// </summary>
+        [Required]
+        public OfferType OfferType { get; set; }
     }
 }
