@@ -31,6 +31,6 @@ namespace TrDealsClient.Interfaces
         /// Добавляет предложение
         /// </summary>
         /// <returns></returns>
-        Task<bool> AddOfferAsync(string currencyFromId, string currencyToId, decimal volume, decimal price);
+        Task<bool> AddOfferAsync(string currencyFromId, string currencyToId, decimal volume, decimal price, int offerType);
     }
 }

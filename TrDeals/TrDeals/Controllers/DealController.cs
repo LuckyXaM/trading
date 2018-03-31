@@ -65,11 +65,12 @@ namespace TrDeals.Controllers
         /// <param name="currencyToId">Ид валюты покупки</param>
         /// <param name="volume"> Сумма</param>
         /// <param name="price">Курс</param>
+        /// <param name="offerType">Тип предложения</param>
         /// <returns></returns>
-        [HttpPost("offer/{currencyFromId}/{currencyToId}/{volume}/{price}")]
-        public async Task<bool> AddOfferAsync(string currencyFromId, string currencyToId, decimal volume, decimal price)
+        [HttpPost("offer/{currencyFromId}/{currencyToId}/{volume}/{price}/{offerType}")]
+        public async Task<bool> AddOfferAsync(string currencyFromId, string currencyToId, decimal volume, decimal price, OfferType offerType)
         {
-            return await _dealService.AddOfferAsync(_userId, currencyFromId, currencyToId, volume, price);
+            return await _dealService.AddOfferAsync(_userId, currencyFromId, currencyToId, volume, price, offerType);
         }
 
         /// <summary>

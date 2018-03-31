@@ -70,11 +70,27 @@ namespace TrDeals.Service.Services.Logic
         /// Добавляет предложение
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> AddOfferAsync(Guid userId, string currencyFromId, string currencyToId, decimal volume, decimal price)
+        public async Task<bool> AddOfferAsync(Guid userId, string currencyFromId, string currencyToId, decimal volume, decimal price, OfferType offerType)
         {
-            if (volume == 0 || price == 0 || !await _currencyClient.CheckCurrencyPairAsync(currencyFromId, currencyToId) || !await _transactionClient.ReserveAsync(userId, currencyFromId, volume))
+            if (volume == 0 || price == 0 || !await _currencyClient.CheckCurrencyPairAsync(currencyFromId, currencyToId))
             {
                 return false;
+            }
+
+            switch (offerType)
+            {
+                case OfferType.Ask:
+                    if (!await _transactionClient.ReserveAsync(userId, currencyFromId, volume))
+                    {
+                        return false;
+                    }
+                    break;
+                case OfferType.Bid:
+                    if (!await _transactionClient.ReserveAsync(userId, currencyToId, volume))
+                    {
+                        return false;
+                    }
+                    break;
             }
 
             try

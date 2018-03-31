@@ -9,27 +9,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <h3>Asks</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Price</th>
-                    <th>Ammount</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.BidAskResourceModel.Asks.OrderBy(a => a.Price))
-                {
-                    <tr>
-                        <td>@item.Price</td>
-                        <td>@item.Volume</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-6">
-        <h3>Bids</h3>
+        <h3>Bids (buy @Model.CurrencyFromId)</h3>
         <table class="table">
             <thead>
                 <tr>
@@ -48,47 +28,29 @@
             </tbody>
         </table>
     </div>
-</div>
-
-<div class="row">
     <div class="col-md-6">
-        <h3>User asks</h3>
-        <br />
-        <div class="row">
-            <div class="col-md-3">
-                <input type="text" class="form-control" id="priceA" placeholder="Price" />
-            </div>
-            <div class="col-md-3">
-                <input type="text" class="form-control" id="volumeA" placeholder="Volume" />
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-success" id="createA">Create ask</button>
-            </div>
-        </div>
+        <h3>Asks (sell @Model.CurrencyFromId)</h3>
         <table class="table">
             <thead>
                 <tr>
                     <th>Price</th>
-                    <th>Volume</th>
-                    <th>Total</th>
-                    <th></th>
+                    <th>Ammount</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.BidAskUserResourceModel.Asks.OrderBy(a => a.Price))
+                @foreach (var item in Model.BidAskResourceModel.Asks.OrderBy(a => a.Price))
                 {
                     <tr>
                         <td>@item.Price</td>
                         <td>@item.Volume</td>
-                        <td>@((decimal)item.Volume * item.Price)</td>
-                        <td>
-                            <button type="button" class="btn btn-danger" data-type="delete" data-id="@item.OfferId">Remove</button>
-                        </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
+</div>
+
+<div class="row">
     <div class="col-md-6">
         <h3>User bids</h3>
         <br />
@@ -106,14 +68,51 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Price</th>
-                    <th>Volume</th>
-                    <th>Total</th>
+                    <th>Price (@Model.CurrencyFromId/@Model.CurrencyToId)</th>
+                    <th style="color:red">Volume (@Model.CurrencyToId)</th>
+                    <th style="color:green">Total (@Model.CurrencyFromId)</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.BidAskUserResourceModel.Bids.OrderByDescending(a => a.Price))
+                {
+                    <tr>
+                        <td>@item.Price</td>
+                        <td>@item.Volume</td>
+                        <td>@((decimal)item.Volume * item.Price)</td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-type="delete" data-id="@item.OfferId">Remove</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h3>User asks</h3>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="priceA" placeholder="Price" />
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control" id="volumeA" placeholder="Volume" />
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success" id="createA">Create ask</button>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Price (@Model.CurrencyFromId/@Model.CurrencyToId)</th>
+                    <th style="color:green">Volume (@Model.CurrencyToId)</th>
+                    <th style="color:red">Total (@Model.CurrencyFromId)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.BidAskUserResourceModel.Asks.OrderBy(a => a.Price))
                 {
                     <tr>
                         <td>@item.Price</td>
@@ -144,10 +143,10 @@
 
         $('button[id="createA"]').on('click', function (e) {
             $('button').prop('disabled', true);
-            console.log('@Model.DealUri' + "/api/deal/offer/" + '@Model.CurrencyFromId' + "/" + '@Model.CurrencyToId' + "/" + $('#volumeA').val() + "/" + $('#priceA').val());
+            console.log('@Model.DealUri' + "/api/deal/offer/" + '@Model.CurrencyFromId' + "/" + '@Model.CurrencyToId' + "/" + $('#volumeA').val() + "/" + $('#priceA').val() + "/1");
             var ajax = $.ajax({
                 type: "POST",
-                url: '@Model.DealUri' + "/api/deal/offer/" + '@Model.CurrencyFromId' + "/" + '@Model.CurrencyToId' + "/" + $('#volumeA').val() + "/" + $('#priceA').val(),
+                url: '@Model.DealUri' + "/api/deal/offer/" + '@Model.CurrencyFromId' + "/" + '@Model.CurrencyToId' + "/" + $('#volumeA').val() + "/" + $('#priceA').val() + "/1",
                 success: function (result) {
                     location.reload()
                 }
@@ -156,10 +155,10 @@
 
         $('button[id="createB"]').on('click', function (e) {
             $('button').prop('disabled', true);
-            console.log('@Model.DealUri' + "/api/deal/offer/" + '@Model.CurrencyToId' + "/" + '@Model.CurrencyFromId' + "/" + $('#volumeB').val() + "/" + $('#priceB').val());
+            console.log('@Model.DealUri' + "/api/deal/offer/" + '@Model.CurrencyFromId' + "/" + '@Model.CurrencyToId' + "/" + $('#volumeB').val() + "/" + $('#priceB').val() + "/2");
             var ajax = $.ajax({
                 type: "POST",
-                url: '@Model.DealUri' + "/api/deal/offer/" + '@Model.CurrencyToId' + "/" + '@Model.CurrencyFromId' + "/" + $('#volumeB').val() + "/" + $('#priceB').val(),
+                url: '@Model.DealUri' + "/api/deal/offer/" + '@Model.CurrencyFromId' + "/" + '@Model.CurrencyToId' + "/" + $('#volumeB').val() + "/" + $('#priceB').val() + "/2",
                 success: function (result) {
                     location.reload()
                 }

@@ -15,7 +15,7 @@ namespace TrDeals.Service.Services.Interfaces
         /// Добавляет предложение
         /// </summary>
         /// <returns></returns>
-        Task<bool> AddOfferAsync(Guid userId, string currencyFromId, string currencyToId, decimal ammount, decimal course);
+        Task<bool> AddOfferAsync(Guid userId, string currencyFromId, string currencyToId, decimal ammount, decimal course, OfferType offerType);
 
         /// <summary>
         /// Удаляет предложение

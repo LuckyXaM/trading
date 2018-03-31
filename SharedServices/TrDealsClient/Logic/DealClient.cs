@@ -85,9 +85,9 @@ namespace TrDealsClient.Logic
         /// Добавляет предложение
         /// </summary>
         /// <returns></returns>
-        public async Task<bool> AddOfferAsync(string currencyFromId, string currencyToId, decimal volume, decimal price)
+        public async Task<bool> AddOfferAsync(string currencyFromId, string currencyToId, decimal volume, decimal price, int offerType)
         {
-            var uri = $"api/deal/offer/{currencyFromId}/{currencyToId}/{volume}/{price}";
+            var uri = $"api/deal/offer/{currencyFromId}/{currencyToId}/{volume}/{price}/{offerType}";
 
             var response = await _client.PostAsync(uri, new StringContent(""));
             return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
